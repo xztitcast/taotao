@@ -1,0 +1,22 @@
+# maven ignore
+target/
+logs/
+skywalking-agent/
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+.factorypath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+/contracts/artifacts/

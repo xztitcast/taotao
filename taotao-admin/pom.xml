@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.bovine</groupId>
+    <artifactId>taotao</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>taotao-admin</artifactId>
+  <packaging>pom</packaging>
+  <name>taotao-admin</name>
+  <description>TT后台管理模块</description>
+  <modules>
+  	<module>taotao-admin-web</module>
+  	<module>taotao-admin-job</module>
+  </modules>
+</project>

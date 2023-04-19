@@ -1,0 +1,97 @@
+server:
+  port: 8780
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+  shutdown: graceful
+  
+spring:
+  application:
+    name: smart-setup-service
+  lifecycle:
+    timeout-per-shutdown-phase: 30S
+  profiles:
+    active:
+    - '@profile.name@'
+  jackson:
+    default-property-inclusion: NON_EMPTY
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+        server-addr: '@dubbo.server-addr@'
+        namespace: '@dubbo.namespace@'
+      config:
+        enabled: true
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+        server-addr: '@dubbo.server-addr@'
+        namespace: '@config.namespace@'
+        file-extension: yml
+        refresh-enabled: true
+        extension-configs:
+        - data-id: ${spring.application.name}.yml
+          group: DEFAULT_GROUP
+          refresh: true
+              
+dubbo:
+  application:
+    qos-enable: false
+    name: ${spring.application.name}
+    metadata-type: remote
+  protocol:
+    name: dubbo
+    port: -1
+    #serialization: kryo
+    serialization: fastjson2
+    dispatcher: message
+    threads: 20
+    threadpool: fixed
+  registry:
+    protocol: nacos
+    address: ${spring.cloud.nacos.discovery.server-addr}
+    username: ${spring.cloud.nacos.discovery.username}
+    password: ${spring.cloud.nacos.discovery.password}
+    parameters:
+      namespace: ${spring.cloud.nacos.discovery.namespace}
+  metadata-report:
+    protocol: nacos
+    address: ${spring.cloud.nacos.discovery.server-addr}
+    username: ${spring.cloud.nacos.discovery.username}
+    password: ${spring.cloud.nacos.discovery.password}
+    parameters:
+      namespace: ${spring.cloud.nacos.discovery.namespace}
+  provider:
+    filter: exceptionCustomizerFilter,-exception
+    loadbalance: roundrobin
+    serialization: fastjson2
+    retries: 0
+    timeout: 6000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+        
+mybatis-plus:
+  mapper-locations:
+  - classpath:mapper/**/*.xml
+  typeAliasesPackage: com.jc.smart.setup.entity
+  global-config:
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

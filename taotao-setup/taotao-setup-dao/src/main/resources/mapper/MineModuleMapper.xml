@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jc.smart.setup.mapper.MineModuleMapper" >
+  <select id="selectMineModuleList" resultType="com.jc.smart.setup.entity.MineModule" parameterType="java.lang.Long">
+  	SELECT 
+  	  	A.id, A.name, A.icon, A.url, A.status, A.tisid, A.tisname,
+  	  	A.creator, A.create_name, A.updater, A.update_name, A.created, A.updated
+  	FROM
+  	  	tb_mine_module A 
+  	  	LEFT JOIN tb_mine_module_area B ON A.id = B.module_id
+  	WHERE
+  		B.area_id = #{areaId} AND
+  	  	A.status = 0
+  </select>
+  
+  <select id="selectMineModuleNotUsedList" resultType="com.jc.smart.setup.entity.MineModule">
+  	SELECT 
+  	  	A.id, A.name, A.icon, A.url, A.status, A.tisid, A.tisname,
+  	  	A.creator, A.create_name, A.updater, A.update_name, A.created, A.updated
+  	FROM
+  	  	tb_mine_module A 
+  	  	LEFT JOIN tb_mine_module_area B ON A.id = B.module_id
+  	WHERE
+  		B.area_id IS NULL AND
+  	  	A.status = 0
+  	ORDER BY
+  		A.created DESC
+  </select>
+  
+</mapper>

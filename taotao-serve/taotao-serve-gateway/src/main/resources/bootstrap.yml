@@ -1,0 +1,61 @@
+server:
+  port: 8761
+  shutdown: graceful
+  
+spring:
+  application:
+    name: smart-serve-gateway
+  lifecycle:
+    timeout-per-shutdown-phase: 30S
+  profiles:
+    active:
+    - '@profile.name@'
+  jackson:
+    default-property-inclusion: NON_EMPTY
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8 
+  cloud:
+    gateway:
+      enabled: true
+    nacos: 
+      discovery:
+        enabled: true
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+        server-addr: '@dubbo.server-addr@'
+        namespace: '@dubbo.namespace@'
+        service: ${spring.application.name}
+      config:
+        enabled: true
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: '@config.namespace@'
+        file-extension: yml
+        refresh-enabled: true
+        extension-configs:
+        - data-id: ${spring.application.name}.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        - data-id: ${spring.application.name}-redis.yml
+          group: DEFAULT_GROUP
+          refresh: true
+    sentinel:
+      enabled: true
+      log:
+        dir: logs
+      transport:
+        port: 8719
+        dashboard: 172.16.25.103:8080
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
+logging:
+  level: #解决nacos心跳不断刷新日志BUG
+    '[org.springframework.cloud.commons.util.InetUtils]': error
+    '[com.alibaba.cloud.nacos.configdata.NacosConfigDataLoader]': error
+    

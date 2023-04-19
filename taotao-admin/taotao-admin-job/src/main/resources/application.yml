@@ -1,0 +1,18 @@
+server:
+  port: 18081
+  tomcat:
+    uri-encoding: UTF-8
+    
+spring:
+  application:
+    name: smart-admin-job
+
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+    accessToken: default_token
+    executor:
+      appname: ${spring.application.name}
+      logretentiondays: 30
+      port: 9999

@@ -1,0 +1,44 @@
+server:
+  port: 34567
+  shutdown: graceful
+
+spring:
+  application:
+    name: smart-serve-monitor
+  thymeleaf:
+    check-template-location: false
+  boot:
+    admin:
+      discovery:
+        enabled: true
+      context-path: '/monitor'
+  security:
+    user:
+      name: admin
+      password: admin123
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        username: @nacos.username@
+        password: @nacos.password@
+        server-addr: @dubbo.server-addr@
+        namespace: @dubbo.namespace@
+        service: ${spring.application.name}
+        group: DEFAULT_GROUP
+        metadata:
+          '[user.name]': admin
+          '[user.password]': admin123
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    logfile:
+      enabled: true
+      external-file: logs/${spring.application.name}.log
