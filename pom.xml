@@ -324,5 +324,6 @@
   	<module>taotao-common</module>
   	<module>taotao-setup</module>
   	<module>taotao-serve</module>
+  	<module>taotao-sso</module>
   </modules>
 </project>

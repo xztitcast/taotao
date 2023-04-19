@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.bovine</groupId>
+    <artifactId>taotao</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>taotao-sso</artifactId>
+  <packaging>pom</packaging>
+  <name>taotao-sso</name>
+  <description>TT单点登录模块</description>
+  <modules>
+  	<module>taotao-sso-dao</module>
+  	<module>taotao-sso-model</module>
+  	<module>taotao-sso-interface</module>
+  	<module>taotao-sso-service</module>
+  	<module>taotao-sso-web</module>
+  </modules>
+</project>
