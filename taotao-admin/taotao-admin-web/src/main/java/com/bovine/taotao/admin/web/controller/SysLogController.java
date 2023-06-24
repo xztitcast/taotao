@@ -1,7 +1,7 @@
 package com.bovine.taotao.admin.web.controller;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class SysLogController extends BaseController {
 	private SysLogService sysLogService;
 	
 	@GetMapping("/list")
-	@RequiresPermissions("sys:log:list")
+	@PreAuthorize(value = "hasAuthority('sys:log:list')")
 	public R list(UserModel form) {
 		P<SysLog> p = sysLogService.getSysLogList(form);
 		return R.ok(p);

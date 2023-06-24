@@ -2,20 +2,24 @@ package com.bovine.taotao.admin.web.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotBlank;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.crypto.hash.Sha256Hash;
+import com.alibaba.fastjson2.JSON;
+import com.bovine.taotao.common.core.Constant;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.admin.web.event.SysLoginEvent;
 import com.bovine.taotao.admin.web.model.LoginModel;
-import com.bovine.taotao.admin.web.service.ShiroService;
-import com.bovine.taotao.admin.web.service.SysUserService;
 import com.bovine.taotao.common.core.R;
 import com.bovine.taotao.common.core.S;
 import com.google.code.kaptcha.Producer;
@@ -46,13 +47,10 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	private Producer producer;
 
 	@Autowired
-	private SysUserService sysUserService;
-
-	@Autowired
-	private ShiroService shiroService;
-
-	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	private ApplicationEventPublisher applicationEventPublisher;
 
@@ -86,7 +84,7 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	 * @param lm
 	 * @return
 	 */
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public R login(@RequestBody @Validated LoginModel lm) {
 		this.applicationEventPublisher.publishEvent(new SysLoginEvent(lm));
 		String captcha = redisTemplate.opsForValue().get(lm.getUuid());
@@ -106,6 +104,28 @@ public class SysLoginController extends BaseController implements ApplicationEve
 		}
 		String token = shiroService.createToken(user);
 		return R.ok(token);
+	}*/
+
+	@PostMapping("/login")
+	public R login(@RequestBody @Validated LoginModel lm) {
+		this.applicationEventPublisher.publishEvent(new SysLoginEvent(lm));
+		String captcha = redisTemplate.opsForValue().get(lm.getUuid());
+		if(captcha == null || captcha.isBlank()) {
+			return R.error(S.CODE_EXPIRE);
+		}
+		redisTemplate.delete(lm.getUuid()); //删除图片
+		if(!captcha.equalsIgnoreCase(lm.getCaptcha())) {
+			return R.error(S.CODE_ERROR);
+		}
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(lm.getUsername(), lm.getPassword());
+		Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+		if(authenticate == null) {
+			return R.error(S.USER_PWD_ERROR);
+		}
+		Object principal = authenticate.getPrincipal();
+		String token = UUID.randomUUID().toString().replace("-", "");
+		redisTemplate.opsForValue().set(Constant.RedisKey.SYS_SESSION_ID_STR_KEY + token, JSON.toJSONString(principal), 12, TimeUnit.HOURS);
+		return R.ok(token);
 	}
 
 	/**
@@ -113,18 +133,21 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/logout")
+	/*@PostMapping("/logout")
 	public R logout(HttpServletRequest request) {
 		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername()));
 		String token = request.getHeader("token");
 		shiroService.remove(token);
 		SecurityUtils.getSubject().logout();
 		return R.ok();
-	}
+	}*/
 
-	public static void main(String[] args) {
-		String hex = new Sha256Hash("admin", "YzcmCZNvbXocrsz9dm8e").toHex();
-		System.out.println(hex);
+	@PostMapping("/logout")
+	public R logout(HttpServletRequest request) {
+		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername()));
+		String token = request.getHeader("token");
+		redisTemplate.delete(Constant.RedisKey.SYS_SESSION_ID_STR_KEY + token);
+		return R.ok();
 	}
 
 	@Override

@@ -7,12 +7,7 @@ import com.bovine.taotao.admin.web.entity.SysRole;
 
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 	
-	/**
-	 * 获取所有权限
-	 * @param userId
-	 * @return
-	 */
-	List<String> selectAllPerms(long userId);
+
 
 	/**
 	 * 查询用户的所有菜单ID

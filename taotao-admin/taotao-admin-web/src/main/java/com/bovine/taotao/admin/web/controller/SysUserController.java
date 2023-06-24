@@ -3,13 +3,12 @@ package com.bovine.taotao.admin.web.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +45,9 @@ public class SysUserController extends BaseController {
 	
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	/**
 	 * 获取当前登陆用户创建的所有用户列表
@@ -53,7 +55,7 @@ public class SysUserController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	@RequiresPermissions("sys:user:list")
+	@PreAuthorize(value = "hasAuthority('sys:user:list')")
 	public R list(UserModel form) {
 		P<SysUser> list = sysUserService.getSysUserList(form, getUserId());
 		return R.ok(list);
@@ -63,7 +65,7 @@ public class SysUserController extends BaseController {
 	 * 获取登录的用户信息
 	 */
 	@GetMapping("/info")
-	@RequiresPermissions("sys:user:info")
+	@PreAuthorize(value = "hasAuthority('sys:user:info')")
 	public R info(){
 		return R.ok(getUser());
 	}
@@ -74,7 +76,7 @@ public class SysUserController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/info/{userId}")
-	@RequiresPermissions("sys:user:info")
+	@PreAuthorize(value = "hasAuthority('sys:user:info')")
 	public R info(@PathVariable("userId") Long userId) {
 		SysUser user = sysUserService.getById(userId);
 		if(user == null) {
@@ -87,10 +89,11 @@ public class SysUserController extends BaseController {
 	
 	@Log("保存用户数据")
 	@PostMapping("/save")
-	@RequiresPermissions("sys:user:save")
+	@PreAuthorize(value = "hasAuthority('sys:user:save')")
 	public R save(@RequestBody SysUser user) {
-		String salt = RandomStringUtils.randomAlphanumeric(20);
-		user.setPassword(new Sha256Hash(user.getPassword(), salt).toHex());
+		String salt = RandomStringUtils.randomAlphanumeric(13);
+		String password = passwordEncoder.encode(user.getPassword().concat(salt));
+		user.setPassword(password);
 		user.setSalt(salt);
 		user.setCreator(getUserId());
 		sysUserService.saveOrUpdate(user);
@@ -99,7 +102,7 @@ public class SysUserController extends BaseController {
 	
 	@Log("修改用户数据")
 	@PostMapping("/update")
-	@RequiresPermissions("sys:user:update")
+	@PreAuthorize(value = "hasAuthority('sys:user:update')")
 	public R update(@RequestBody SysUser user) throws Exception{
 		user.setCreator(getUserId());
 		sysUserService.saveOrUpdate(user);
@@ -108,18 +111,19 @@ public class SysUserController extends BaseController {
 
 	@Log("修改用户密码")
 	@PutMapping ("/password")
-	@RequiresPermissions("sys:user:update")
-	public R password(@Valid @RequestBody PasswordModel from){
+	@PreAuthorize(value = "hasAuthority('sys:user:update')")
+	public R password(@Valid @RequestBody PasswordModel pm){
 		SysUser sysUser = sysUserService.getById(getUserId());
 		if(sysUser == null) {
 			return R.error(S.USER_NOTFOUND_ERROR);
 		}
-		String oldPwd = new Sha256Hash(from.getPassword(), sysUser.getSalt()).toHex();
-		if(!sysUser.getPassword().equals(oldPwd)) {
+		String password = passwordEncoder.encode(pm.getPassword().concat(sysUser.getSalt()));
+		if(!sysUser.getPassword().equals(password)) {
 			return R.error(S.USER_ORIGINAL_PWD_ERROR);
 		}
-		String salt = RandomStringUtils.randomAlphanumeric(20);
-		sysUser.setPassword(new Sha256Hash(from.getNewPassword(), salt).toHex());
+		String salt = RandomStringUtils.randomAlphanumeric(13);
+		password = passwordEncoder.encode(pm.getNewPassword().concat(salt));
+		sysUser.setPassword(password);
 		sysUser.setSalt(salt);
 		sysUserService.updateById(sysUser);
 		return R.ok();
@@ -127,7 +131,7 @@ public class SysUserController extends BaseController {
 
 	@Log("修改用户账户状态")
 	@PostMapping("/change")
-	@RequiresPermissions("sys:user:update")
+	@PreAuthorize(value = "hasAuthority('sys:user:update')")
 	public R change(@RequestBody SysUser em){
 		SysUser sysUser = sysUserService.getById(em.getId());
 		if(sysUser == null) {
@@ -151,7 +155,7 @@ public class SysUserController extends BaseController {
 	 */
 	@Log("删除用户数据")
 	@DeleteMapping("/delete")
-	@RequiresPermissions("sys:user:delete")
+	@PreAuthorize(value = "hasAuthority('sys:user:delete')")
 	public R delete(@RequestBody Long[] userIds){
 		if(ArrayUtils.contains(userIds, SUPER_ADMIN)){
 			return R.error(S.USER_REMOVE_SUPER_ADMIN_ERROR);
@@ -171,7 +175,7 @@ public class SysUserController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/tree")
-	@RequiresPermissions("sys:user:list")
+	@PreAuthorize(value = "hasAuthority('sys:user:list')")
 	public R tree() {
 		List<SysUser> list = sysUserService.getSysUserList(getUserId());
 		SysUser root = new SysUser();

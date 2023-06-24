@@ -3,8 +3,8 @@ package com.bovine.taotao.admin.web.controller;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysMenu;
-import com.bovine.taotao.admin.web.service.ShiroService;
 import com.bovine.taotao.admin.web.service.SysMenuService;
 import com.bovine.taotao.common.core.Constant;
 import com.bovine.taotao.common.core.R;
@@ -33,10 +32,7 @@ public class SysMenuController extends BaseController {
 
 	@Autowired
 	private SysMenuService sysMenuService;
-	
-	@Autowired
-	private ShiroService shiroService;
-	
+
 	/**
 	 * 菜单权限导航
 	 * @return
@@ -44,7 +40,7 @@ public class SysMenuController extends BaseController {
 	@GetMapping("/nav")
 	public R nav() {
 		List<SysMenu> menuList = sysMenuService.getNavMenuTreeList(getUserId());
-		Set<String> permissions = shiroService.getUserPermissions(getUserId());
+		Set<String> permissions = sysMenuService.getPermissions(getUserId());
 		return R.ok().put("menuList", menuList).put("permissions", permissions);
 	}
 	
@@ -53,7 +49,7 @@ public class SysMenuController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	@RequiresPermissions("sys:menu:list")
+	@PreAuthorize(value = "hasAuthority('sys:menu:list')")
 	public R list(){
 		List<SysMenu> menuList = sysMenuService.getMenuTreeList(getUserId());
 		return R.ok(menuList);
@@ -64,7 +60,7 @@ public class SysMenuController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/select")
-	@RequiresPermissions("sys:menu:select")
+	@PreAuthorize(value = "hasAuthority('sys:menu:select')")
 	public R select() {
 		List<SysMenu> menuList = sysMenuService.getNotButtonList();
 		return R.ok(menuList);
@@ -76,7 +72,7 @@ public class SysMenuController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/info/{menuId}")
-	@RequiresPermissions("sys:menu:info")
+	@PreAuthorize(value = "hasAuthority('sys:menu:info')")
 	public R info(@PathVariable("menuId") Long menuId){
 		SysMenu menu = sysMenuService.getById(menuId);
 		return R.ok(menu);
@@ -84,7 +80,7 @@ public class SysMenuController extends BaseController {
 	
 	@Log("保存菜单数据")
 	@PostMapping("/save")
-	@RequiresPermissions("sys:menu:save")
+	@PreAuthorize(value = "hasAuthority('sys:menu:save')")
 	public R save(@RequestBody SysMenu menu) {
 		//数据校验
 		verifyForm(menu);
@@ -96,7 +92,7 @@ public class SysMenuController extends BaseController {
 	
 	@Log("修改菜单数据")
 	@PostMapping("/update")
-	@RequiresPermissions("sys:menu:update")
+	@PreAuthorize(value = "hasAuthority('sys:menu:update')")
 	public R update(@RequestBody SysMenu menu) {
 		//数据校验
 		verifyForm(menu);
@@ -114,7 +110,7 @@ public class SysMenuController extends BaseController {
 	 */
 	@Log("删除菜单数据")
 	@DeleteMapping("/delete/{menuId}")
-	@RequiresPermissions("sys:menu:delete")
+	@PreAuthorize(value = "hasAuthority('sys:menu:delete')")
 	public R delete(@PathVariable("menuId") long menuId){
 		if(menuId <= 28){
 			return R.error(S.MENU_BASEFRAME_REMOVE_ERROR);

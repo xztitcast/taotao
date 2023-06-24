@@ -4,19 +4,36 @@ import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import com.bovine.taotao.admin.web.security.AuthenticationTokenFilter;
+import com.bovine.taotao.admin.web.security.LockedAuthenticationFailureHandler;
+import com.bovine.taotao.admin.web.security.RefreshAuthenticationSuccessHandler;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.alibaba.fastjson2.JSON;
@@ -32,23 +49,58 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
-	
-	private static PathMatcher pathMatcher = new AntPathMatcher();
-	
+
 	@Autowired
-	private DeviceConfig deviceConfig;
-	
-	private DeviceProcessor deviceProcessor;
-	
-	/*@Bean
-	public RequestInterceptor requestInterceptor(){
-		return (request) -> {
-			SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-			request.header(Sys.USER_ID, sysUser.getId()+"");
-			request.header(Sys.USER_NAME, sysUser.getUsername());
+	private AuthenticationTokenFilter authenticationTokenFilter;
+
+	@Autowired
+	private LockedAuthenticationFailureHandler lockedAuthenticationFailureHandler;
+
+	@Autowired
+	private RefreshAuthenticationSuccessHandler refreshAuthenticationSuccessHandler;
+
+	@Bean
+	public BCryptPasswordEncoder bcryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception {
+		httpSecurity.csrf(csrf -> csrf.disable())
+				.cors(cors -> cors.disable())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.formLogin(login -> login.successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
+				.authorizeHttpRequests(request -> request.requestMatchers("/sys/login").permitAll().requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
+				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
+				.addFilterBefore(this.authenticationTokenFilter, AuthenticationTokenFilter.class)
+				.exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler()).authenticationEntryPoint(authenticationEntryPoint()))
+				.logout(logout -> logout.logoutUrl("/sys/logout").logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
+		return httpSecurity.build();
+	}
+
+	@Bean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return (request, response, authException) -> {
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.getWriter().println(R.error(HttpStatus.UNAUTHORIZED.value(), "认证失败请重新登录!"));
 		};
-	}*/
+	}
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return (request, response, accessDeniedException) -> {
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.getWriter().println(R.error(HttpStatus.FORBIDDEN.value(), "您未开通相应的权限,请联系管理员"));
+		};
+	}
 
 	@Override
 	public Executor getAsyncExecutor() {
@@ -68,10 +120,20 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
 		return (t, m, args) -> log.error("线程池异常捕获 method = " + m.getName() + "args = " + JSON.toJSONString(args), t);
 	}
-	
-	@Bean
-	public WebFilter ignoreFilter() {
-		return (exchange, chain) -> {
+
+	//@Component
+	public static class IgnoreFilter implements WebFilter {
+
+		private static PathMatcher pathMatcher = new AntPathMatcher();
+
+		//@Autowired
+		private DeviceConfig deviceConfig;
+
+		//@Autowired
+		private DeviceProcessor deviceProcessor;
+
+		@Override
+		public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 			ServerHttpRequest request = exchange.getRequest();
 			String uri = request.getURI().getRawPath();
 			if(!isMatch(deviceConfig.getUrls(), uri)) {
@@ -89,46 +151,41 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 				}
 			}
 			return chain.filter(exchange);
-		};
-	}
-	
-
-	
-	/**
-	 * 路由匹配
-	 * @param patterns 路由匹配符集合
-	 * @param path 被匹配的路由
-	 * @return 是否匹配成功 
-	 */
-	protected boolean isMatch(Set<String> patterns, String path) {
-		for (String pattern : patterns) {
-			if (isMatch(pattern, path)) {
-				return true;
-			}
 		}
-		return false;
-	}
-	
-	/**
-	 * 路由匹配
-	 * @param pattern 路由匹配符 
-	 * @param path 被匹配的路由  
-	 * @return 是否匹配成功 
-	 */
-	protected boolean isMatch(String pattern, String path) {
-		return pathMatcher.match(pattern, path);
-	}
-	
-	/**
-	 * 获取IP地址
-	 * @param request
-	 * @return
-	 */
-	private String getAddress(ServerHttpRequest request){
-		String address = request.getRemoteAddress().getAddress().getCanonicalHostName();
-		if(address == null || address.trim().length() == 0 || "unknown".equalsIgnoreCase(address)) {
+
+		/**
+		 * 路由匹配
+		 * @param patterns 路由匹配符集合
+		 * @param path 被匹配的路由
+		 * @return 是否匹配成功
+		 */
+		protected boolean isMatch(Set<String> patterns, String path) {
+			for (String pattern : patterns) {
+				if (isMatch(pattern, path)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * 路由匹配
+		 * @param pattern 路由匹配符
+		 * @param path 被匹配的路由
+		 * @return 是否匹配成功
+		 */
+		protected boolean isMatch(String pattern, String path) {
+			return pathMatcher.match(pattern, path);
+		}
+
+		/**
+		 * 获取IP地址
+		 * @param request
+		 * @return
+		 */
+		private String getAddress(ServerHttpRequest request){
 			HttpHeaders headers = request.getHeaders();
-			address = headers.getFirst("x-forwarded-for");
+			String address = headers.getFirst("x-forwarded-for");
 			if (address != null && address.length() != 0 && !"unknown".equalsIgnoreCase(address)) {
 				// 多次反向代理后会有多个address值，第一个address才是真实address
 				if (address.indexOf(",") != -1) {
@@ -153,8 +210,8 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 			if (address == null || address.length() == 0 || "unknown".equalsIgnoreCase(address)) {
 				address = request.getRemoteAddress().getAddress().getHostAddress();
 			}
+			return address;
 		}
-		return address;
 	}
 
 }

@@ -2,8 +2,8 @@ package com.bovine.taotao.admin.web.controller;
 
 import java.util.Arrays;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +37,7 @@ public class SysDictController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	@RequiresPermissions("sys:dict:list")
+	@PreAuthorize(value = "hasAuthority('sys:dict:list')")
 	public R list(DictModel form) {
 		P<SysDict> p = sysDictService.getDictList(form);
 		return R.ok(p);
@@ -49,7 +49,7 @@ public class SysDictController {
 	 * @return
 	 */
 	@GetMapping("/info/{id}")
-	@RequiresPermissions("sys:dict:info")
+	@PreAuthorize(value = "hasAuthority('sys:dict:info')")
 	public R info(@PathVariable("id") Long id){
 		SysDict dict = sysDictService.getById(id);
 		return R.ok(dict);
@@ -60,7 +60,7 @@ public class SysDictController {
 	 */
 	@Log("保存字典数据")
 	@PostMapping("/save")
-	@RequiresPermissions("sys:dict:save")
+	@PreAuthorize(value = "hasAuthority('sys:dict:save')")
 	public R save(@RequestBody SysDict dict){
 		boolean save = sysDictService.save(dict);
 		if(save) {
@@ -74,7 +74,7 @@ public class SysDictController {
 	 */
 	@Log("修改字典数据")
 	@PostMapping("/update")
-	@RequiresPermissions("sys:dict:update")
+	@PreAuthorize(value = "hasAuthority('sys:dict:update')")
 	public R update(@RequestBody SysDict dict){
 		boolean update = sysDictService.updateById(dict);
 		if(update) {
@@ -88,7 +88,7 @@ public class SysDictController {
 	 */
 	@Log("删除字典数据")
 	@DeleteMapping ("/delete")
-	@RequiresPermissions("sys:dict:delete")
+	@PreAuthorize(value = "hasAuthority('sys:dict:delete')")
 	public R delete(@RequestBody Long[] ids){
 		boolean remove = sysDictService.removeByIds(Arrays.asList(ids));
 		if(remove) {

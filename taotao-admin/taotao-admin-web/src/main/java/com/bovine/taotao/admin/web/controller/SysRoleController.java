@@ -3,8 +3,8 @@ package com.bovine.taotao.admin.web.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +44,7 @@ public class SysRoleController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	@RequiresPermissions("sys:role:list")
+	@PreAuthorize(value = "hasAuthority('sys:role:list')")
 	public R list(RoleModel form) {
 		P<SysRole> p = sysRoleService.getSysRoleList(form ,getUserId());
 		return R.ok(p);
@@ -55,7 +55,7 @@ public class SysRoleController extends BaseController {
 	 * (当前登陆用户为Admin时获取所有角色)
 	 */
 	@GetMapping("/select")
-	@RequiresPermissions("sys:role:select")
+	@PreAuthorize(value = "hasAuthority('sys:role:select')")
 	public R select() {
 		List<SysRole> result = null;
 		if(getUserId() == Constant.Sys.SUPER_ADMIN) {
@@ -72,7 +72,7 @@ public class SysRoleController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/info/{roleId}")
-	@RequiresPermissions("sys:role:info")
+	@PreAuthorize(value = "hasAuthority('sys:role:info')")
 	public R info(@PathVariable("roleId") Long roleId) {
 		SysRole sysRole = sysRoleService.getById(roleId);
 		List<Long> menuIdList = sysRoleMenuServcie.getMenuIdList(roleId);
@@ -82,7 +82,7 @@ public class SysRoleController extends BaseController {
 	
 	@Log("修改角色数据")
 	@PostMapping("/save")
-	@RequiresPermissions("sys:role:save")
+	@PreAuthorize(value = "hasAuthority('sys:role:save')")
 	public R save(@RequestBody SysRole role) {
 		role.setCreator(getUserId());
 		sysRoleService.save(role);
@@ -91,7 +91,7 @@ public class SysRoleController extends BaseController {
 	
 	@Log("保存角色数据")
 	@PostMapping("/update")
-	@RequiresPermissions("sys:role:update")
+	@PreAuthorize(value = "hasAuthority('sys:role:update')")
 	public R update(@RequestBody SysRole role) {
 		role.setCreator(getUserId());
 		sysRoleService.saveOrUpdate(role);
@@ -100,7 +100,7 @@ public class SysRoleController extends BaseController {
 	
 	@Log("删除角色数据")
 	@DeleteMapping ("/delete")
-	@RequiresPermissions("sys:role:delete")
+	@PreAuthorize(value = "hasAuthority('sys:role:delete')")
 	public R delete(@RequestBody Long[] roleIds){
 		sysRoleService.deleteBatch(roleIds);
 		return R.ok();

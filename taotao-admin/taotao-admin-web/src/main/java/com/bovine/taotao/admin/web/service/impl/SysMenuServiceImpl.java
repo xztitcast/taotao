@@ -1,9 +1,14 @@
 package com.bovine.taotao.admin.web.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import com.bovine.taotao.common.core.Constant;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +56,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 		});
 		return resolveMenuTreeList(menuList);
 	}
-	
+
+	@Override
+	public Set<String> getPermissions(Long userId) {
+		List<String> permsList;
+		if(userId == Constant.Sys.SUPER_ADMIN) {
+			permsList = this.list().stream().map(m -> m.getPerms()).collect(Collectors.toList());
+		}else {
+			permsList = this.baseMapper.selectAllPerms(userId);
+		}
+		return permsList.stream().filter(p -> StringUtils.isNotBlank(p)).map(p -> Arrays.asList(p.trim().split(","))).collect(HashSet::new, Set::addAll, Set::addAll);
+	}
+
 	@Override
 	public List<SysMenu> getNotButtonList() {
 		LambdaQueryWrapper<SysMenu> wrapper = Wrappers.lambdaQuery(SysMenu.class).ne(SysMenu::getType, 2).orderByAsc(SysMenu::getSorted);

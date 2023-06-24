@@ -1,6 +1,7 @@
 package com.bovine.taotao.admin.web.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bovine.taotao.admin.web.entity.SysMenu;
@@ -31,6 +32,13 @@ public interface SysMenuService extends IService<SysMenu> {
 	 * @return
 	 */
 	List<SysMenu> getMenuTreeList(Long userId);
+
+	/**
+	 * 获取权限
+	 * @param userId 用户ID
+	 * @return
+	 */
+	Set<String> getPermissions(Long userId);
 	
 	/**
 	 * 获取不包含按钮的菜单列表
