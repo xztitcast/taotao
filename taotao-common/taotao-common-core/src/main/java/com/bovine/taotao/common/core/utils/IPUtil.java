@@ -1,6 +1,6 @@
 package com.bovine.taotao.common.core.utils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class IPUtil {
 

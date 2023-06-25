@@ -8,7 +8,7 @@ server:
   
 spring:
   application:
-    name: smart-setup-service
+    name: taotao-setup-service
   lifecycle:
     timeout-per-shutdown-phase: 30S
   profiles:

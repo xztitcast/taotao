@@ -14,10 +14,10 @@
   <properties>
 		<java.version>17</java.version>
 		<spring-boot.version>3.1.0</spring-boot.version>
-		<spring-cloud.version>2021.0.6</spring-cloud.version>
+		<spring-cloud.version>2021.0.7</spring-cloud.version>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+		<spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<aliyun-java-sdk-core.version>3.3.1</aliyun-java-sdk-core.version>
@@ -32,7 +32,8 @@
 		<cos_api.version>5.6.106</cos_api.version>
 	  	<kaptcha.version>2.3.2</kaptcha.version>
 		<shiro.version>1.11.0</shiro.version>
-		<dubbo.version>3.1.6</dubbo.version>
+	  	<jsoup.version>1.16.1</jsoup.version>
+		<dubbo.version>3.2.2</dubbo.version>
 		<kryo.version>2.7.21</kryo.version>
 		<poi.version>5.2.2</poi.version>
 	  	<wx.version>4.4.0</wx.version>
@@ -197,6 +198,11 @@
 			<artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
 			<version>${wx.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
   	</dependencies>
   </dependencyManagement>
   
@@ -220,9 +226,9 @@
             <profile.name>uat</profile.name>
             <nacos.username>nacos</nacos.username>
             <nacos.password>nacos</nacos.password>
-            <dubbo.server-addr>172.16.25.103:8848</dubbo.server-addr>
+            <dubbo.server-addr>192.168.25.103:8848</dubbo.server-addr>
             <dubbo.namespace>6aaab3a4-1a74-4fb8-b56e-6a66533e20fd</dubbo.namespace>
-            <config.namespace>ce6cec1a-987d-46d2-ae93-57ccdd1ada2f</config.namespace>
+            <config.namespace>2bb40149-832c-463f-af79-8126ab57e6f8</config.namespace>
         </properties>
     </profile>
     <profile>

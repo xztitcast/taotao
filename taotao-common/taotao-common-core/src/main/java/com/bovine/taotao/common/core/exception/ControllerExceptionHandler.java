@@ -1,10 +1,7 @@
 package com.bovine.taotao.common.core.exception;
 
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -15,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.bovine.taotao.common.core.R;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Set;
 
 /**
  * 全局控制器异常捕获

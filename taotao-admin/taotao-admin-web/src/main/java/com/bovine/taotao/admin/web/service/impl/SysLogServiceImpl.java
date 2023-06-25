@@ -2,8 +2,7 @@ package com.bovine.taotao.admin.web.service.impl;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -20,8 +19,9 @@ import com.bovine.taotao.admin.web.model.LoginModel;
 import com.bovine.taotao.admin.web.model.UserModel;
 import com.bovine.taotao.admin.web.service.SysLogService;
 import com.bovine.taotao.common.core.P;
-import com.bovine.taotao.common.core.utils.HttpContextUtil;
 import com.bovine.taotao.common.core.utils.IPUtil;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service("sysLogService")
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService, ApplicationListener<SysLoginEvent> {
@@ -50,7 +50,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 			sysLog.setUsername(event.getSource().toString());
 			sysLog.setMethod("com.jc.smart.admin.web.controller.SysLoginController.logout()");
 		}
-		HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		sysLog.setIp(IPUtil.getIpAddr(request));
 		sysLog.setTime(0L);
 		sysLog.setCreated(new Date());

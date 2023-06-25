@@ -8,7 +8,7 @@ server:
   
 spring:
   application:
-    name: smart-sso-web
+    name: taotao-sso-web
   lifecycle:
     timeout-per-shutdown-phase: 30S
   profiles:

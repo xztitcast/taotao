@@ -5,8 +5,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.bovine.taotao.admin.web.security.AuthenticationTokenFilter;
-import com.bovine.taotao.admin.web.security.LockedAuthenticationFailureHandler;
-import com.bovine.taotao.admin.web.security.RefreshAuthenticationSuccessHandler;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.server.ServerWebExchange;
@@ -56,12 +55,6 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 	@Autowired
 	private AuthenticationTokenFilter authenticationTokenFilter;
 
-	@Autowired
-	private LockedAuthenticationFailureHandler lockedAuthenticationFailureHandler;
-
-	@Autowired
-	private RefreshAuthenticationSuccessHandler refreshAuthenticationSuccessHandler;
-
 	@Bean
 	public BCryptPasswordEncoder bcryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -77,10 +70,9 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 		httpSecurity.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.formLogin(login -> login.successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
 				.authorizeHttpRequests(request -> request.requestMatchers("/sys/login").permitAll().requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
 				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
-				.addFilterBefore(this.authenticationTokenFilter, AuthenticationTokenFilter.class)
+				.addFilterBefore(this.authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler()).authenticationEntryPoint(authenticationEntryPoint()))
 				.logout(logout -> logout.logoutUrl("/sys/logout").logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
 		return httpSecurity.build();
