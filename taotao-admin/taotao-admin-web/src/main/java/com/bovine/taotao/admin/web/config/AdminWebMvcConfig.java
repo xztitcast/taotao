@@ -1,10 +1,13 @@
 package com.bovine.taotao.admin.web.config;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.bovine.taotao.admin.web.security.AuthenticationTokenFilter;
+import com.bovine.taotao.admin.web.security.LockedAuthenticationFailureHandler;
+import com.bovine.taotao.admin.web.security.RefreshAuthenticationSuccessHandler;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +25,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -70,28 +70,22 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 		httpSecurity.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(request -> request.requestMatchers("/sys/login").permitAll().requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
+				.formLogin(login -> login.loginProcessingUrl("/sys/login").successHandler(new RefreshAuthenticationSuccessHandler()).failureHandler(new LockedAuthenticationFailureHandler()))
+				//.authorizeHttpRequests(request -> request.requestMatchers("/sys/login").permitAll().requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
+				.authorizeHttpRequests(request -> request.requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
 				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
 				.addFilterBefore(this.authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler()).authenticationEntryPoint(authenticationEntryPoint()))
-				.logout(logout -> logout.logoutUrl("/sys/logout").logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
+				.exceptionHandling(handler -> handler.accessDeniedHandler((request, response, accessDeniedException) -> {
+					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+					response.getWriter().write(R.error(HttpStatus.FORBIDDEN.value(), "您未开通相应的权限,请联系管理员").toJSONString());
+				}).authenticationEntryPoint((request, response, authException) -> {
+					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+					response.getWriter().write(R.error(HttpStatus.UNAUTHORIZED.value(), "认证失败请重新登录!").toJSONString());
+					response.getWriter().flush();
+				}));
 		return httpSecurity.build();
-	}
-
-	@Bean
-	public AuthenticationEntryPoint authenticationEntryPoint() {
-		return (request, response, authException) -> {
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-			response.getWriter().println(R.error(HttpStatus.UNAUTHORIZED.value(), "认证失败请重新登录!"));
-		};
-	}
-
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
-		return (request, response, accessDeniedException) -> {
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-			response.getWriter().println(R.error(HttpStatus.FORBIDDEN.value(), "您未开通相应的权限,请联系管理员"));
-		};
 	}
 
 	@Override

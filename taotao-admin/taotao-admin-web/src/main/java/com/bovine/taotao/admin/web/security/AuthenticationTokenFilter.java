@@ -38,7 +38,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             String value = this.redisTemplate.opsForValue().get(Constant.RedisKey.SYS_SESSION_ID_STR_KEY + token);
             LoginUserDetails loginUserDetails = JSON.parseObject(value, LoginUserDetails.class);
             if(loginUserDetails != null) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUserDetails, null, null);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }

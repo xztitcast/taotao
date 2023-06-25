@@ -1,9 +1,11 @@
 package com.bovine.taotao.common.core;
 
+import com.alibaba.fastjson2.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class R extends HashMap<String, Object> {
+public class R extends JSONObject {
 
 	private static final long serialVersionUID = 1L;
 
