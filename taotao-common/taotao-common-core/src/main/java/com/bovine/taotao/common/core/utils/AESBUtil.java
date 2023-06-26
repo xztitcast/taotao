@@ -11,6 +11,11 @@ import org.apache.commons.lang.RandomStringUtils;
 import cn.hutool.core.codec.Base58;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * AES对称加密工具
+ * 该对称加密工具专门用于前后携带随机数的加解密
+ * @author eden
+ */
 @Slf4j
 public class AESBUtil {
 
@@ -102,26 +107,28 @@ public class AESBUtil {
 			return null;
 		}
 	}
-    
-    /**
-     * 加密
-     * @param contentBytes
-     * @param keyBytes
-     * @return
-     * @throws Exception
-     */
-    public static byte[] encrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
+
+	/**
+	 * 加密
+	 * @param key
+	 * @param content
+	 * @param iv
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] encrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
         return cipher(key, content, iv, Cipher.ENCRYPT_MODE);
     }
-    
-    /**
-     * 解密
-     * @param contentBytes
-     * @param keyBytes
-     * @return
-     * @throws Exception
-     */
-    public static byte[] decrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
+
+	/**
+	 * 解密
+	 * @param key
+	 * @param content
+	 * @param iv
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
         return cipher(key, content, iv, Cipher.DECRYPT_MODE);
     }
     

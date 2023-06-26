@@ -10,6 +10,7 @@ import java.util.Base64;
 
 /**
  * AES对称加密工具
+ * 该对称加密工具专门用于带有时间戳的加解密
  * @author eden
  * @date 2022年11月17日 下午11:46:52
  */
@@ -103,26 +104,28 @@ public abstract class AESUtil {
 			return null;
 		}
 	}
-    
-    /**
-     * 加密
-     * @param contentBytes
-     * @param keyBytes
-     * @return
-     * @throws Exception
-     */
-    public static byte[] encrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
+
+	/**
+	 * 加密
+	 * @param key
+	 * @param content
+	 * @param iv
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] encrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
         return cipher(key, content, iv, Cipher.ENCRYPT_MODE);
     }
-    
-    /**
-     * 解密
-     * @param contentBytes
-     * @param keyBytes
-     * @return
-     * @throws Exception
-     */
-    public static byte[] decrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
+
+	/**
+	 * 解密
+	 * @param key
+	 * @param content
+	 * @param iv
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decrypt(byte[] key, byte[] content, byte[] iv) throws Exception{
         return cipher(key, content, iv, Cipher.DECRYPT_MODE);
     }
     
