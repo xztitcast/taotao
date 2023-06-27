@@ -233,6 +233,11 @@ public interface Constant {
     	 * 小城登录KEY
     	 */
     	String SSO_MINI_LOGIN_STR_KEY = "jc:sso:";
+
+		/**
+		 * 后台管系统登录锁定KEY
+		 */
+		String SYS_LOGIN_LOCKED_KEY = "jc:sys:locked:";
     	
     }
     

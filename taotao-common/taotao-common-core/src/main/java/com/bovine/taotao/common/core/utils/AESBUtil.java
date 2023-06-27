@@ -1,6 +1,7 @@
 package com.bovine.taotao.common.core.utils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -35,54 +36,81 @@ public class AESBUtil {
 	 * @return
 	 */
 	public static String encrypt(String content) {
-		return encrypt(DEFAULT_KEY, content);
+		return encrypt(content, true);
 	}
-	
+
+	/**
+	 * 加密
+	 * @param content 需要加密内容
+	 * @param base58 是否是Base58格式
+	 * @return
+	 */
+	public static String encrypt(String content, boolean base58) {
+		return encrypt(DEFAULT_KEY, content, base58);
+	}
+
+	/**
+	 * 加密
+	 * @param key 密钥
+	 * @param content 需要加密的内容
+	 * @return
+	 */
+	public static String encrypt(String key, String content, boolean base58) {
+		return encrypt(key, content, DEFAULT_IV_STRING, base58);
+	}
+
 	/**
 	 * 解密
 	 * @param content 需要解密的内容
 	 * @return
 	 */
 	public static String decrypt(String content) {
-		return decrypt(DEFAULT_KEY, content);
-	}
-
-	/**
-	 * 加密
-	 * @param key 密钥
-	 * @param content 需要加密的内容
-	 * @return
-	 */
-	public static String encrypt(String key, String content) {
-		return encrypt(key, content, DEFAULT_IV_STRING);
+		return decrypt(content, true);
 	}
 
 	/**
 	 * 解密
-	 * @param key 密钥
-	 * @param content 需要加密的内容
+	 * @param content 需要解密的内容
+	 * @param base58 是否是Base58格式
 	 * @return
 	 */
-	public static String decrypt(String key, String content) {
-		return decrypt(key, content, DEFAULT_IV_STRING);
+	public static String decrypt(String content, boolean base58) {
+		return decrypt(DEFAULT_KEY, content, base58);
 	}
-	
+
+
+	/**
+	 * 解密
+	 * @param key 密钥
+	 * @param content 需要解密的内容
+	 * @param base58 是否是Base58格式
+	 * @return
+	 */
+	public static String decrypt(String key, String content, boolean base58) {
+		return decrypt(key, content, DEFAULT_IV_STRING, base58);
+	}
+
 	/**
 	 * 加密
 	 * @param key 密钥
 	 * @param content 需要加密的内容
-	 * @param ivStr 向量
+	 * @param ivStr 向量(CBC增强)
+	 * @param base58 是否是Base58格式
 	 * @return
 	 */
-	public static String encrypt(String key, String content, String ivStr) {
+	public static String encrypt(String key, String content, String ivStr, boolean base58) {
 		try {
 			String left = RandomStringUtils.randomAlphanumeric(6);
 			String right = RandomStringUtils.randomAlphanumeric(6);
-    		byte[] contentBytes = left.concat(content).concat(right).getBytes(StandardCharsets.UTF_8);
-	        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-	        byte[] ivBytes = ivStr.getBytes(StandardCharsets.UTF_8);
-	        byte[] encryptedBytes = encrypt(keyBytes, contentBytes, ivBytes);
-	        return Base58.encode(encryptedBytes);
+			byte[] contentBytes = left.concat(content).concat(right).getBytes(StandardCharsets.UTF_8);
+			byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+			byte[] ivBytes = ivStr.getBytes(StandardCharsets.UTF_8);
+			byte[] encryptedBytes = encrypt(keyBytes, contentBytes, ivBytes);
+			if(base58) {
+				return Base58.encode(encryptedBytes);
+			}else {
+				return Base64.getEncoder().encodeToString(encryptedBytes);
+			}
 		} catch (Exception e) {
 			log.error("加密异常!", e);
 			return null;
@@ -93,15 +121,22 @@ public class AESBUtil {
 	 * 解密
 	 * @param key 密钥
 	 * @param content 需要加密的内容
-	 * @param ivStr 向量
+	 * @param ivStr 向量(CBC增强)
+	 * @param base58 是否是Base58格式
 	 * @return
 	 */
-	public static String decrypt(String key, String content, String ivStr) {
+	public static String decrypt(String key, String content, String ivStr, boolean base58) {
 		try {
-	        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-	        byte[] decryptedBytes = decrypt(keyBytes, Base58.decode(content), ivStr.getBytes(StandardCharsets.UTF_8));
-	        String result = new String(decryptedBytes, StandardCharsets.UTF_8);
-	        return result.substring(6, result.length()-6);
+			byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+			byte[] contentBytes = null;
+			if(base58) {
+				contentBytes = Base58.decode(content);
+			}else{
+				contentBytes = Base64.getDecoder().decode(content);
+			}
+			byte[] decryptedBytes = decrypt(keyBytes, contentBytes , ivStr.getBytes(StandardCharsets.UTF_8));
+			String result = new String(decryptedBytes, StandardCharsets.UTF_8);
+			return result.substring(6, result.length()-6);
 		} catch (Exception e) {
 			log.error("解密异常!", e);
 			return null;

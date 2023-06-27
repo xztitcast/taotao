@@ -38,9 +38,10 @@ CREATE TABLE tb_sys_user (
      password varchar(100),
      salt varchar(20),
      status smallint,
+     locked timestamp(6) DEFAULT NOW(),
      avatar varchar(255),
-     created timestamp(0),
-     updated timestamp(0),
+     created timestamp(6),
+     updated timestamp(6),
      creator int8,
      tisid int8,
      tisname varchar(50),
@@ -53,6 +54,7 @@ COMMENT ON COLUMN tb_sys_user.id IS '主键ID';
 COMMENT ON COLUMN tb_sys_user.username IS '用户名';
 COMMENT ON COLUMN tb_sys_user.password IS '密码';
 COMMENT ON COLUMN tb_sys_user.status IS '状态  0：停用 1：正常';
+COMMENT ON COLUMN tb_sys_user.locked IS '锁定时间';
 COMMENT ON COLUMN tb_sys_user.avatar IS '头像';
 COMMENT ON COLUMN tb_sys_user.created IS '创建时间';
 COMMENT ON COLUMN tb_sys_user.updated IS '更新时间';
@@ -65,8 +67,8 @@ CREATE TABLE tb_sys_role (
      id bigserial NOT NULL,
      name varchar(50),
      remark varchar(100),
-     created timestamp(0),
-     updated timestamp(0),
+     created timestamp(6),
+     updated timestamp(6),
      creator int8,
      PRIMARY KEY (id)
 );
@@ -112,7 +114,7 @@ CREATE TABLE tb_sys_log (
     params text,
     time int8 NOT NULL,
     ip varchar(64),
-    created timestamp(0),
+    created timestamp(6),
     PRIMARY KEY (id)
 );
 
@@ -130,8 +132,8 @@ CREATE TABLE tb_sys_dict (
      key varchar(50) NOT NULL UNIQUE,
      value varchar(255) NOT NULL,
      remark varchar(50),
-     created timestamp(0) DEFAULT NULL,
-     updated timestamp(0) DEFAULT NULL,
+     created timestamp(6) DEFAULT NULL,
+     updated timestamp(6) DEFAULT NULL,
      PRIMARY KEY (id)
 );
 
@@ -187,8 +189,8 @@ CREATE TABLE "public"."tb_sys_device"(
      "type" int2 NOT NULL,
      "tisid" int8 NOT NULL,
      "tisname" varchar(50),
-     "created" timestamp(0) DEFAULT NOW(),
-     "updated" timestamp(0) DEFAULT NOW()
+     "created" timestamp(6) DEFAULT NOW(),
+     "updated" timestamp(6) DEFAULT NOW()
 );
 
 COMMENT ON TABLE "public"."tb_sys_device" IS 'API授权设备表';

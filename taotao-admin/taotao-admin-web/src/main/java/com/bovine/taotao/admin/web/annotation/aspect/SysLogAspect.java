@@ -5,6 +5,7 @@ import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysLog;
 import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.admin.web.service.SysLogService;
+import com.bovine.taotao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
 import com.bovine.taotao.common.core.utils.IPUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -71,7 +72,8 @@ public class SysLogAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
 		sysLog.setIp(IPUtil.getIpAddr(request));
-		String username = ((SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		LoginUserDetails principal = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getUsername();
 		sysLog.setUsername(username);
 		sysLog.setTime(time);
 		sysLog.setCreated(new Date());

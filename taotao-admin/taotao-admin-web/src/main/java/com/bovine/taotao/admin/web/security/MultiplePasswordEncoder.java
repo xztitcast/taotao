@@ -30,8 +30,7 @@ public class MultiplePasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println(rawPassword.toString());
-        String decrypt = AESBUtil.decrypt(rawPassword.toString());
+        String decrypt = AESBUtil.decrypt(rawPassword.toString(), false);
         return this.passwordEncoder.matches(decrypt, encodedPassword);
     }
 

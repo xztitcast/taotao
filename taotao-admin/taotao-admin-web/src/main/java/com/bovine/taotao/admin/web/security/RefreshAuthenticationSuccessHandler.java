@@ -1,15 +1,22 @@
 package com.bovine.taotao.admin.web.security;
 
+import com.alibaba.fastjson2.JSON;
+import com.bovine.taotao.common.core.Constant;
+import com.bovine.taotao.common.core.R;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author eden
@@ -23,6 +30,11 @@ public class RefreshAuthenticationSuccessHandler implements AuthenticationSucces
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("登录成功");
+        String token = UUID.randomUUID().toString().replace("-", "");
+        this.redisTemplate.opsForValue().set(Constant.RedisKey.SYS_SESSION_ID_STR_KEY + token, JSON.toJSONString(authentication.getPrincipal()), 12, TimeUnit.HOURS);
+        this.redisTemplate.delete(Constant.RedisKey.SYS_LOGIN_LOCKED_KEY.concat(request.getParameter("username")));
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        response.getWriter().print(R.ok(token));
     }
 }

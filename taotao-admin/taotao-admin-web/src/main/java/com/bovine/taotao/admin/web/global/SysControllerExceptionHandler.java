@@ -1,5 +1,7 @@
 package com.bovine.taotao.admin.web.global;
 
+import com.bovine.taotao.common.core.S;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,5 +29,15 @@ public class SysControllerExceptionHandler extends ControllerExceptionHandler {
 	public R sysServiceException(SysServiceException e) {
 		log.error("SysServiceException 业务异常", e);
 		return R.error(e.getMessage());
+	}
+
+	/**
+	 * 注解权限异常捕获
+	 * @return
+	 */
+	@ExceptionHandler(AccessDeniedException.class)
+	public R accessDeniedException(AccessDeniedException e) {
+		log.error("注解PreAuthorize权限认证异常", e);
+		return R.error(S.SYSTEM_UNAUTHORIZED);
 	}
 }

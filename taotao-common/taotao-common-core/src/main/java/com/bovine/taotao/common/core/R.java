@@ -11,7 +11,7 @@ public class R extends JSONObject {
 
 	private static final String CODE = "code";
 	
-	private static final String MESSAGE = "msg";
+	private static final String MESSAGE = "message";
 	
 	private static final String RESULT = "result";
 	

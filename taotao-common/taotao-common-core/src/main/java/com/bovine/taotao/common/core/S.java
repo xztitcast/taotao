@@ -17,7 +17,7 @@ public enum S {
 	
 	SENTINEL_LIMIT(603, "系统正在努力排队中...请稍后重试!"),
 	
-	SYSTEM_UNAUTHORIZED(604, "请科学上网正常访问...否则封禁哦!"),
+	SYSTEM_UNAUTHORIZED(604, "未正常授权,请联系管理员...否则封禁哦!"),
 	
 	PARAMTER_INDEX_OUTOF_BOUNDS_ERROR(605, "传递后端参数下标越界"),
 	
@@ -33,7 +33,7 @@ public enum S {
 
 	USER_NOTFOUND_ERROR(1002, "用户不存在!"),
 	
-	USER_PWD_ERROR(1003, "账号或密码错误!"),
+	USER_PWD_ERROR(1003, "账号或密码错误或验证码错误!"),
 	
 	USER_INACTIVE_ERROR(1004, "账号已被禁用,请联系管理员!"),
 

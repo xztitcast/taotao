@@ -55,6 +55,12 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 	private MultipleDaoAuthenticationProvider multipleDaoAuthenticationProvider;
 
 	@Autowired
+	private LockedAuthenticationFailureHandler lockedAuthenticationFailureHandler;
+
+	@Autowired
+	private RefreshAuthenticationSuccessHandler refreshAuthenticationSuccessHandler;
+
+	@Autowired
 	private MultipleWebAuthenticationDetailsSource multipleWebAuthenticationDetailsSource;
 
 	@Bean
@@ -62,7 +68,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 		httpSecurity.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.formLogin(login -> login.loginProcessingUrl("/sys/login").authenticationDetailsSource(this.multipleWebAuthenticationDetailsSource).successHandler(new RefreshAuthenticationSuccessHandler()).failureHandler(new LockedAuthenticationFailureHandler()))
+				.formLogin(login -> login.loginProcessingUrl("/sys/login").authenticationDetailsSource(this.multipleWebAuthenticationDetailsSource).successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
 				.authorizeHttpRequests(request -> request.requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
 				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
 				.authenticationProvider(this.multipleDaoAuthenticationProvider)
@@ -70,12 +76,12 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 				.exceptionHandling(handler -> handler.accessDeniedHandler((request, response, accessDeniedException) -> {
 					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-					response.getWriter().write(R.error(S.SYSTEM_UNAUTHORIZED.getValue(), "您未开通相应的权限,请联系管理员").toJSONString());
+					response.getWriter().print(R.error(S.SYSTEM_UNAUTHORIZED));
 				}).authenticationEntryPoint((request, response, authException) -> {
 					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 					response.setStatus(HttpServletResponse.SC_OK);
-					response.getWriter().write(R.error(S.UNAUTHORIZED.getValue(), "登录失败请重新登录!").toJSONString());
+					response.getWriter().print(R.error(S.UNAUTHORIZED));
 				}));
 		return httpSecurity.build();
 	}

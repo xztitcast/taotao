@@ -8,6 +8,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,7 +66,6 @@ public class SysUserController extends BaseController {
 	 * 获取登录的用户信息
 	 */
 	@GetMapping("/info")
-	@PreAuthorize(value = "hasAuthority('sys:user:info')")
 	public R info(){
 		return R.ok(getUser());
 	}
@@ -91,10 +91,9 @@ public class SysUserController extends BaseController {
 	@PostMapping("/save")
 	@PreAuthorize(value = "hasAuthority('sys:user:save')")
 	public R save(@RequestBody SysUser user) {
-		String salt = RandomStringUtils.randomAlphanumeric(13);
-		String password = passwordEncoder.encode(user.getPassword().concat(salt));
+		String password = passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
-		user.setSalt(salt);
+		user.setSalt(RandomStringUtils.randomAlphanumeric(13));
 		user.setCreator(getUserId());
 		sysUserService.saveOrUpdate(user);
 		return R.ok();
@@ -121,10 +120,9 @@ public class SysUserController extends BaseController {
 		if(!sysUser.getPassword().equals(password)) {
 			return R.error(S.USER_ORIGINAL_PWD_ERROR);
 		}
-		String salt = RandomStringUtils.randomAlphanumeric(13);
-		password = passwordEncoder.encode(pm.getNewPassword().concat(salt));
+		password = passwordEncoder.encode(pm.getNewPassword());
 		sysUser.setPassword(password);
-		sysUser.setSalt(salt);
+		sysUser.setSalt(RandomStringUtils.randomAlphanumeric(13));
 		sysUserService.updateById(sysUser);
 		return R.ok();
 	}

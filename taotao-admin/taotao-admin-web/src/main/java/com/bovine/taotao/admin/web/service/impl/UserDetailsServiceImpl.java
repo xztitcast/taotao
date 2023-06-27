@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+            return this.permissions.stream().filter(Objects::nonNull).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }
 
         @Override
@@ -74,7 +76,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         @Override
         public boolean isAccountNonLocked() {
-            return true;
+            return new Date().after(sysUser.getLocked());
         }
 
         @Override

@@ -1,6 +1,7 @@
 package com.bovine.taotao.admin.web.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson2.annotation.JSONField;
@@ -38,6 +39,11 @@ public class SysUser extends BaseEntity<Long> implements Serializable {
      * 冗余机构名称
      */
     private String tisname;
+
+	/**
+	 * 锁定账号时间(可以是Long值或设置成Date值)
+	 */
+	private Date locked;
     
     @TableField(exist = false)
     private Integer parentId = 0;
@@ -136,4 +142,11 @@ public class SysUser extends BaseEntity<Long> implements Serializable {
 		this.roleIdList = roleIdList;
 	}
 
+	public Date getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Date locked) {
+		this.locked = locked;
+	}
 }
