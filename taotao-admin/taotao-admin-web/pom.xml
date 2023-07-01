@@ -93,7 +93,7 @@
         </executions>
         <configuration>
         	<finalName>${project.build.finalName}</finalName>
-            <mainClass>com.jc.smart.admin.web.AdminWebApplication</mainClass>
+            <mainClass>com.bovine.taotao.admin.web.AdminWebApplication</mainClass>
         </configuration>
        </plugin>
      </plugins>

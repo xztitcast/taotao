@@ -81,7 +81,7 @@
         </executions>
         <configuration>
         	<finalName>${project.build.finalName}</finalName>
-            <mainClass>com.jc.smart.serve.gateway.ServeGatewayApplication</mainClass>
+            <mainClass>com.bovine.taotao.serve.gateway.ServeGatewayApplication</mainClass>
         </configuration>
        </plugin>
      </plugins>

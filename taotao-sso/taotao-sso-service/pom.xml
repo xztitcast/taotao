@@ -7,6 +7,7 @@
   </parent>
   <artifactId>taotao-sso-service</artifactId>
   <name>taotao-sso-service</name>
+  <description>TT系统单点登录服务提供者子模块</description>
   <dependencies>
   	<dependency>
 		<groupId>${project.groupId}</groupId>
@@ -71,7 +72,7 @@
         </executions>
         <configuration>
         	<finalName>${project.build.finalName}</finalName>
-            <mainClass>com.jc.smart.sso.service.SsoServiceApplication</mainClass>
+            <mainClass>com.bovine.taotao.sso.service.SsoServiceApplication</mainClass>
         </configuration>
        </plugin>
      </plugins>

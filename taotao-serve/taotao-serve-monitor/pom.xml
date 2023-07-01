@@ -50,7 +50,7 @@
         </executions>
         <configuration>
         	<finalName>${project.build.finalName}</finalName>
-            <mainClass>com.jc.smart.serve.monitor.ServeMonitorApplication</mainClass>
+            <mainClass>com.bovine.taotao.serve.monitor.ServeMonitorApplication</mainClass>
         </configuration>
        </plugin>
      </plugins>

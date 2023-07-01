@@ -7,6 +7,7 @@
   </parent>
   <artifactId>taotao-sso-model</artifactId>
   <name>taotao-sso-model</name>
+  <description>TT系统单点登录实体类子模块</description>
   <dependencies>
   	<dependency>
 		<groupId>${project.groupId}</groupId>

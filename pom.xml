@@ -332,5 +332,6 @@
   	<module>taotao-setup</module>
   	<module>taotao-serve</module>
   	<module>taotao-sso</module>
+  	<module>taotao-framework</module>
   </modules>
 </project>

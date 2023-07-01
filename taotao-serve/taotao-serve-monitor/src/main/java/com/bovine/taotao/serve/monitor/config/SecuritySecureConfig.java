@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -32,22 +31,23 @@ public class SecuritySecureConfig {
 
 	@Bean
 	@Primary
-	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(this.adminServer.path("/"));
-
-        return http.authorizeRequests((authorizeRequests) -> authorizeRequests.requestMatchers(this.adminServer.path("/assets/**")).permitAll()
-                        .requestMatchers(this.adminServer.path("/actuator/**")).permitAll()
-                        .requestMatchers(this.adminServer.path("/instances")).permitAll()
-                        .requestMatchers(this.adminServer.path("/css/**")).permitAll()
-                        .requestMatchers(this.adminServer.path("/js/**")).permitAll()
-                        .requestMatchers(this.adminServer.path("/image/**")).permitAll()
-                        .requestMatchers(this.adminServer.path("/login")).permitAll().anyRequest().authenticated()
-        ).formLogin(
-                (formLogin) -> formLogin.loginPage(this.adminServer.path("/login")).successHandler(successHandler)
-        ).logout((logout) -> logout.logoutUrl(this.adminServer.path("/logout"))).httpBasic(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable).headers(e -> e.frameOptions(same -> same.disable())).build();
+        
+        return httpSecurity.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
+        	.authorizeHttpRequests(request -> request.requestMatchers(this.adminServer.path("/assets/**")).permitAll()
+        			.requestMatchers(this.adminServer.path("/actuator/**")).permitAll()
+        			.requestMatchers(this.adminServer.path("/instances")).permitAll()
+        			.requestMatchers(this.adminServer.path("/css/**")).permitAll()
+                    .requestMatchers(this.adminServer.path("/js/**")).permitAll()
+                    .requestMatchers(this.adminServer.path("/image/**")).permitAll()
+                    .requestMatchers(this.adminServer.path("/login")).permitAll())
+        	.authorizeHttpRequests(request -> request.anyRequest().authenticated())
+        	.formLogin(login -> login.loginPage(this.adminServer.path("/login")).successHandler(successHandler))
+        	.logout(logout -> logout.logoutUrl(this.adminServer.path("/logout"))).httpBasic(Customizer.withDefaults())
+        	.headers(e -> e.frameOptions(same -> same.disable())).build();		
 	}
 }

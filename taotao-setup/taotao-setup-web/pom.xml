@@ -64,7 +64,7 @@
         </executions>
         <configuration>
         	<finalName>${project.build.finalName}</finalName>
-            <mainClass>com.jc.smart.setup.web.SetupWebApplication</mainClass>
+            <mainClass>com.bovine.taotao.setup.web.SetupWebApplication</mainClass>
         </configuration>
        </plugin>
      </plugins>
