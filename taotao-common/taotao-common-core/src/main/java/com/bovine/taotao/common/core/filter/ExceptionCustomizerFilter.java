@@ -60,7 +60,7 @@ public class ExceptionCustomizerFilter implements Filter, Filter.Listener {
                 }
                 // directly throw if it's JDK exception
                 String className = exception.getClass().getName();
-                if (className.startsWith("java.") || className.startsWith("javax.") || className.startsWith("com.jc.")) {
+                if (className.startsWith("java.") || className.startsWith("javax.") || className.startsWith("com.bovine.taotao")) {
                     return;
                 }
                 // directly throw if it's dubbo exception

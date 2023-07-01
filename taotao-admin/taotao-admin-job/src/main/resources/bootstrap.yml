@@ -2,10 +2,10 @@ server:
   port: 18081
   tomcat:
     uri-encoding: UTF-8
-    
+
 spring:
   application:
-    name: smart-admin-job
+    name: taotao-admin-job
 
 xxl:
   job:

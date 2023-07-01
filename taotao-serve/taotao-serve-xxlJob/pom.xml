@@ -44,4 +44,24 @@
 		<version>2.3.1</version>
 	</dependency>
   </dependencies>
+  <build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>${spring-boot.version}</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<finalName>${project.build.finalName}</finalName>
+				<mainClass>com.xxl.job.admin.XxlJobAdminApplication</mainClass>
+			</configuration>
+		</plugin>
+	</plugins>
+  </build>
 </project>

@@ -86,7 +86,7 @@ management:
 mybatis-plus:
   mapper-locations:
   - classpath:mapper/**/*.xml
-  typeAliasesPackage: com.jc.smart.sso.entity
+  typeAliasesPackage: com.bovine.taotao.sso.entity
   global-config:
     banner: false
   configuration:
