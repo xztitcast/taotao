@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jc.smart.setup.mapper.AdContentMapper" >
+  <select id="selectAdContentList" resultType="com.jc.smart.setup.entity.AdContent">
+  	SELECT 
+  	  	A.id, A.name, A.category_id, A.category_name, A.pics, A.urls, A.jump_type, A.jump_appid, A.jump_url, A.shared, A.start_time, A.end_time
+  	FROM
+  	  	tb_ad_content A 
+  	  	LEFT JOIN tb_ad_join_content B ON A.id = B.content_id
+		LEFT JOIN tb_ad Ad ON Ad.id = B.ad_id
+  	<where>
+		<if test="model.adType != null and model.adType != '' ">
+			Ad.tisid = #{model.tisid} AND
+			Ad.adtype = #{model.adType} AND
+		</if>
+		<if test="model.adId != null ">
+			B.ad_id = #{model.adId} AND
+		</if>
+		A.start_time &lt;= NOW() AND
+		A.end_time &gt;= NOW()
+		ORDER BY B.sorted ASC
+	</where>
+
+  </select>
+  
+</mapper>
