@@ -1,4 +1,4 @@
-package com.bovine.taotao.admin.web.security;
+package com.bovine.taotao.admin.web.filter;
 
 import com.alibaba.fastjson2.JSON;
 import com.bovine.taotao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;

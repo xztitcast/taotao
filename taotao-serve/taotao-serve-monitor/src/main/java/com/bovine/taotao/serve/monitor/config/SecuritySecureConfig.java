@@ -38,16 +38,16 @@ public class SecuritySecureConfig {
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(this.adminServer.path("/"));
 
-        return http.authorizeRequests((authorizeRequests) -> authorizeRequests.antMatchers(this.adminServer.path("/assets/**")).permitAll()
-                        .antMatchers(this.adminServer.path("/actuator/**")).permitAll()
-                        .antMatchers(this.adminServer.path("/instances")).permitAll()
-                        .antMatchers(this.adminServer.path("/css/**")).permitAll()
-                        .antMatchers(this.adminServer.path("/js/**")).permitAll()
-                        .antMatchers(this.adminServer.path("/image/**")).permitAll()
-                        .antMatchers(this.adminServer.path("/login")).permitAll().anyRequest().authenticated()
+        return http.authorizeRequests((authorizeRequests) -> authorizeRequests.requestMatchers(this.adminServer.path("/assets/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/actuator/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/instances")).permitAll()
+                        .requestMatchers(this.adminServer.path("/css/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/js/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/image/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/login")).permitAll().anyRequest().authenticated()
         ).formLogin(
-                (formLogin) -> formLogin.loginPage(this.adminServer.path("/login")).successHandler(successHandler).and()
+                (formLogin) -> formLogin.loginPage(this.adminServer.path("/login")).successHandler(successHandler)
         ).logout((logout) -> logout.logoutUrl(this.adminServer.path("/logout"))).httpBasic(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable).headers().frameOptions().sameOrigin().disable().build();
+                .csrf(AbstractHttpConfigurer::disable).headers(e -> e.frameOptions(same -> same.disable())).build();
 	}
 }

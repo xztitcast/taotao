@@ -34,14 +34,19 @@ public class MultipleWebAuthenticationDetailsSource implements AuthenticationDet
             this(request);
             String captcha = request.getParameter("captcha");
             String uuid = request.getParameter("uuid");
-            String value = redisTemplate.opsForValue().get(uuid);
-            if(value == null || value.isBlank()) {
+            if(uuid == null || uuid.isBlank()) {
                 this.verify = false;
-            } else if(!value.equals(captcha)) {
-                this.verify = false;
-                redisTemplate.delete(uuid);
             }else {
-                this.verify = true;
+                String value = redisTemplate.opsForValue().get(uuid);
+                if(value == null || value.isBlank()) {
+                    this.verify = false;
+                } else if(!value.equals(captcha)) {
+                    this.verify = false;
+                    redisTemplate.delete(uuid);
+                }else {
+                    this.verify = true;
+                    redisTemplate.delete(uuid);
+                }
             }
         }
 

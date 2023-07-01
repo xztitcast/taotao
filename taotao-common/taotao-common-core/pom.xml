@@ -62,5 +62,11 @@
   		<artifactId>dubbo-rpc-api</artifactId>
   		<optional>true</optional>
     </dependency>
+  	<dependency>
+	  	<groupId>javax.validation</groupId>
+	  	<artifactId>validation-api</artifactId>
+  	</dependency>
+
+
   </dependencies>
 </project>

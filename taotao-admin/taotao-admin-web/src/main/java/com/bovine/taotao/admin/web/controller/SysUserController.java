@@ -91,9 +91,8 @@ public class SysUserController extends BaseController {
 	@PostMapping("/save")
 	@PreAuthorize(value = "hasAuthority('sys:user:save')")
 	public R save(@RequestBody SysUser user) {
-		String password = passwordEncoder.encode(user.getPassword());
-		user.setPassword(password);
-		user.setSalt(RandomStringUtils.randomAlphanumeric(13));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setSalt(RandomStringUtils.randomAlphanumeric(20));
 		user.setCreator(getUserId());
 		sysUserService.saveOrUpdate(user);
 		return R.ok();
@@ -116,13 +115,12 @@ public class SysUserController extends BaseController {
 		if(sysUser == null) {
 			return R.error(S.USER_NOTFOUND_ERROR);
 		}
-		String password = passwordEncoder.encode(pm.getPassword().concat(sysUser.getSalt()));
-		if(!sysUser.getPassword().equals(password)) {
+		String password = passwordEncoder.encode(pm.getPassword());
+		if(!passwordEncoder.matches(password, sysUser.getPassword())) {
 			return R.error(S.USER_ORIGINAL_PWD_ERROR);
 		}
-		password = passwordEncoder.encode(pm.getNewPassword());
-		sysUser.setPassword(password);
-		sysUser.setSalt(RandomStringUtils.randomAlphanumeric(13));
+		sysUser.setPassword(passwordEncoder.encode(pm.getNewPassword()));
+		sysUser.setSalt(RandomStringUtils.randomAlphanumeric(20));
 		sysUserService.updateById(sysUser);
 		return R.ok();
 	}

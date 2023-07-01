@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jc.smart.setup.mapper.MineModuleMapper" >
-  <select id="selectMineModuleList" resultType="com.jc.smart.setup.entity.MineModule" parameterType="java.lang.Long">
+<mapper namespace="com.bovine.taotao.setup.mapper.MineModuleMapper" >
+  <select id="selectMineModuleList" resultType="com.bovine.taotao.setup.entity.MineModule" parameterType="java.lang.Long">
   	SELECT 
   	  	A.id, A.name, A.icon, A.url, A.status, A.tisid, A.tisname,
   	  	A.creator, A.create_name, A.updater, A.update_name, A.created, A.updated
@@ -13,7 +13,7 @@
   	  	A.status = 0
   </select>
   
-  <select id="selectMineModuleNotUsedList" resultType="com.jc.smart.setup.entity.MineModule">
+  <select id="selectMineModuleNotUsedList" resultType="com.bovine.taotao.setup.entity.MineModule">
   	SELECT 
   	  	A.id, A.name, A.icon, A.url, A.status, A.tisid, A.tisname,
   	  	A.creator, A.create_name, A.updater, A.update_name, A.created, A.updated

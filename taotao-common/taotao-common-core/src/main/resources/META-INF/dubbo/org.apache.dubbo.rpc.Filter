@@ -1,1 +1,1 @@
-exceptionCustomizerFilter=com.jc.smart.common.core.filter.ExceptionCustomizerFilter
+exceptionCustomizerFilter=com.bovine.taotao.common.core.filter.ExceptionCustomizerFilter

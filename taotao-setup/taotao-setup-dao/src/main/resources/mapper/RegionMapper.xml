@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jc.smart.setup.mapper.RegionMapper" >
+<mapper namespace="com.bovine.taotao.setup.mapper.RegionMapper" >
   <!-- 关联查询有效行政区, A表市cid与B表的pid进行内联 查询条件是省ID、市ID、区ID 正向解析-->
-  <select id="selectRegionByIds" resultType="com.jc.smart.setup.entity.Region" parameterType="java.util.Map">
+  <select id="selectRegionByIds" resultType="com.bovine.taotao.setup.entity.Region" parameterType="java.util.Map">
   	SELECT
   	  	A.pname AS "pname", A.cname AS "cname", B.cname AS "areaname"
   	FROM

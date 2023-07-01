@@ -39,7 +39,7 @@ public class ClassroomController {
 
 	/**
 	 * 获取课堂列表
-	 * @param am
+	 * @param aacm
 	 * @return
 	 */
 	@PostMapping("/list")
