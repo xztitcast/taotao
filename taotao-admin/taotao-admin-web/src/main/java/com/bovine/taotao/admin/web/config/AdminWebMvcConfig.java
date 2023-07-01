@@ -65,7 +65,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception {
-		httpSecurity.csrf(csrf -> csrf.disable())
+		return httpSecurity.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.formLogin(login -> login.loginProcessingUrl("/sys/login").authenticationDetailsSource(this.multipleWebAuthenticationDetailsSource).successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
@@ -82,8 +82,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 					response.setStatus(HttpServletResponse.SC_OK);
 					response.getWriter().print(R.error(S.UNAUTHORIZED));
-				}));
-		return httpSecurity.build();
+				})).build();
 	}
 
 	@Override

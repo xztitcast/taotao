@@ -30,9 +30,9 @@ public class MultipleDaoAuthenticationProvider extends DaoAuthenticationProvider
         if(!details.isVerify()) {
             throw new BadCredentialsException("数字验证码验证失败!");
         }
-        //双因子验证码验证(后续需要可增加)
 
         //Spring Security原有认证逻辑(账号密码验证)
         super.additionalAuthenticationChecks(userDetails, authentication);
+
     }
 }

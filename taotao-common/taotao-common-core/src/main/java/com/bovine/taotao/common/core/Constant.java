@@ -38,8 +38,9 @@ public interface Constant {
         
         String MENU_NAME = "一级菜单";
         
-        String SYS_TOKEN = "token";
-        
+        String TOKEN = "token";
+
+		String FACTOR_NAME = "isSend";
 	}
 	
 	/**
@@ -197,47 +198,37 @@ public interface Constant {
     	/**
     	 * 设备KEY
     	 */
-    	String GATEWAY_DEVICEID_STR_KEY = "jc:gateway:deviceId:";
+    	String GATEWAY_DEVICEID_STR_KEY = "TT:GATEWAY:DEVICE:ID:";
     	
     	/**
     	 * 防重复请求KEY
     	 */
-    	String GATEWAY_DUPLICATE_STR_KEY = "jc:gateway:duplicate:";
+    	String GATEWAY_DUPLICATE_STR_KEY = "TT:GATEWAY:DUPLICATE:";
     	
     	/**
-    	 * 令牌桶限流后通行证KEY
+    	 * 后台管理登录成功session id
     	 */
-    	String GATEWAY_LIMITER_RATE_STR_KEY = "jc:gateway:limiter:rate:";
-    	
-    	/**
-    	 * 网关生成TOKEN令牌的KEY
-    	 */
-    	String GATEEAY_LIMITER_TOKEN_VALUE_STR_KEY = "jc:gateway:limiter:token:";
-    	
-    	/**
-    	 * 网关限流通行证KEY
-    	 */
-    	String GATEWAY_REQUEST_FLOW_COUNT_STR_KEY = "jc:gateway:request:flow:count";
-    	
-    	/**
-    	 * 后台管理session id 
-    	 */
-    	String SYS_SESSION_ID_STR_KEY = "jc:sys:sessionId:";
+    	String SYS_SESSION_ID_STR_KEY = "TT:SYS:SESSION:ID:";
+
+		/**
+		 * 后台管理双因子短信认证
+		 */
+		String SYS_SMS_ID_KEY = "TT:SYS:SMS:ID:";
+
+		/**
+		 * 短信code码
+		 */
+		String SYS_SMS_MOBILE_KEY = "TT:SYS:SMS:MOBILE:";
     	
     	/**
     	 * 后台管理行政区
     	 */
-    	String SYS_REGION_STR_KEY = "jc:sys:region:";
-    	
-    	/**
-    	 * 小城登录KEY
-    	 */
-    	String SSO_MINI_LOGIN_STR_KEY = "jc:sso:";
+    	String SYS_REGION_STR_KEY = "TT:SYS:REGION:";
 
 		/**
 		 * 后台管系统登录锁定KEY
 		 */
-		String SYS_LOGIN_LOCKED_KEY = "jc:sys:locked:";
+		String SYS_LOGIN_LOCKED_KEY = "TT:SYS:LOCKED:";
     	
     }
     

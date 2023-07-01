@@ -44,7 +44,7 @@ public class AuthenticationDuplicateFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		StringBuilder sb = new StringBuilder(RedisKey.GATEWAY_DUPLICATE_STR_KEY);
 		ServerHttpRequest request = exchange.getRequest();
-		String first = request.getHeaders().getFirst(Sys.SYS_TOKEN);
+		String first = request.getHeaders().getFirst(Sys.TOKEN);
 		if(StringUtils.isNotBlank(first)) sb.append(first);
 		String subject = request.getHeaders().getFirst(JwtTokenManager.SUBJECT_HEADER);
 		Principal principal = JSON.parseObject(subject, Principal.class);

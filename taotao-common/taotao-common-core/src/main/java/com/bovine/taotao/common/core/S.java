@@ -27,29 +27,31 @@ public enum S {
 	DATA_HOT_ERROR(608, "该数据已经是热门数据"),
 	DATA_TOP_ERROR(609, "该数据已经置顶"),
 	
-	CODE_EXPIRE(1000, "验证码已失效!"),
-	
-	CODE_ERROR(1001, "验证码错误!"),
+	TOKEN_EXPIRE(1000, "凭证已失效!"),
 
-	USER_NOTFOUND_ERROR(1002, "用户不存在!"),
+	CODE_EXPIRE(1001, "验证码已失效"),
 	
-	USER_PWD_ERROR(1003, "账号或密码错误或验证码错误!"),
-	
-	USER_INACTIVE_ERROR(1004, "账号已被禁用,请联系管理员!"),
+	CODE_ERROR(1002, "验证码错误!"),
 
-	USER_ORIGINAL_PWD_ERROR(1005, "用户原密码错误!"),
+	USER_NOTFOUND_ERROR(1003, "用户不存在!"),
 	
-	USER_NOTPERMISSION_ERROR(1006, "无权限修改用户状态!"),
+	USER_PWD_ERROR(1004, "账号或密码错误或验证码错误!"),
 	
-	USER_STATUS_PARAMTER_ERROR(1007, "前端状态参数传递异常!"),
+	USER_INACTIVE_ERROR(1005, "账号已被禁用,请联系管理员!"),
+
+	USER_ORIGINAL_PWD_ERROR(1006, "用户原密码错误!"),
 	
-	USER_REMOVE_SUPER_ADMIN_ERROR(1008, "系统管理员不能删除！"),
+	USER_NOTPERMISSION_ERROR(1007, "无权限修改用户状态!"),
 	
-	USER_CURRENT_REMOVE_ERROR(1009, "当前用户不能被删除!"),
+	USER_STATUS_PARAMTER_ERROR(1008, "前端状态参数传递异常!"),
 	
-	USER_ADDPERMISSIONS_ERROR(1010, "新增用户所选角色，不是本人创建!"),
+	USER_REMOVE_SUPER_ADMIN_ERROR(1009, "系统管理员不能删除！"),
 	
-	USER_ADDROLE_NOTPERMISSIONS_ERROR(1011, "新增角色的权限，已超出你的权限范围!"),
+	USER_CURRENT_REMOVE_ERROR(1010, "当前用户不能被删除!"),
+	
+	USER_ADDPERMISSIONS_ERROR(1011, "新增用户所选角色，不是本人创建!"),
+	
+	USER_ADDROLE_NOTPERMISSIONS_ERROR(1012, "新增角色的权限，已超出你的权限范围!"),
 	
 	MENU_BASEFRAME_REMOVE_ERROR(2000, "基础框架菜单不能删除!"),
 	
