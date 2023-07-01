@@ -64,7 +64,7 @@ dubbo:
       namespace: ${spring.cloud.nacos.discovery.namespace}
   consumer:
     loadbalance: roundrobin
-    validation: true
+    validation: false
     timeout: 30000
     check: false
         

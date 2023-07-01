@@ -64,7 +64,8 @@ dubbo:
       namespace: ${spring.cloud.nacos.discovery.namespace}
   consumer:
     loadbalance: roundrobin
-    validation: true
+    #validation: true 由于升级Spring boot3.0 javaEE包名已修改jakarta，如果开启dubbo参数验证会报错所以暂时关闭程序入参用Spring框架验证
+    validation: false
     timeout: 30000
     check: false
 

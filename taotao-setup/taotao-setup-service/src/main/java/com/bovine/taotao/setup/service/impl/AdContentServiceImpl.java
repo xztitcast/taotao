@@ -68,7 +68,7 @@ public class AdContentServiceImpl extends ServiceImpl<AdContentMapper, AdContent
 	public boolean delete(Serializable[] id) {
 		return this.removeBatchByIds(Arrays.asList(id));
 	}
-	
+
 	@Override
 	public List<AdContent> getAdContentList() {
 		Date date = new Date();
