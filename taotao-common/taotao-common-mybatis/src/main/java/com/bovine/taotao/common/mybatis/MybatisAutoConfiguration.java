@@ -13,6 +13,15 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.bovine.taotao.common.mybatis.handler.MybatisPlusMetaObjectHandler;
 
+/**
+ * mybatis-plus自动化配置
+ *
+ * mybatis-plus版本变化注意点:
+ * 3.5.3只适用于Spring boot2.x
+ * 3.5.3.1适用于Spring boot3.x
+ * @author eden
+ * @date 2023年07月05日 下午4:17:23
+ */
 @Configuration
 @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
 public class MybatisAutoConfiguration {

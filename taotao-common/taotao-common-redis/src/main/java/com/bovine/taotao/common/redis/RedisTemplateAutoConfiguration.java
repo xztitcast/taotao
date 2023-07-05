@@ -28,6 +28,10 @@ import com.bovine.taotao.common.redis.processor.RedisDbIndexThreadLocal;
  * 该配置只允许读取数据字典数据
  * 不允许使用该dictRedisTemplate做任何的其他操作
  * 其他操作请注入Spring自带的redisTemplate
+ *
+ * redis配置注意点升级Spring boot3.0后redis配置文件已更改
+ * Spring boot3.x: spring.data.redis.xxx
+ * Spring boot2.x: spring.redis.xxx
  * @author eden
  * @date 2022年11月20日 下午9:48:23
  */
