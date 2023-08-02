@@ -44,6 +44,7 @@ dubbo:
     qos-enable: false
     name: ${spring.application.name}
     metadata-type: remote
+    serialize-check-status: WARN
   protocol:
     name: dubbo
     port: -1
