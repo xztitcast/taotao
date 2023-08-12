@@ -39,7 +39,7 @@ public class ArticleController {
 
 	/**
 	 * 获取文章列表
-	 * @param am
+	 * @param acm
 	 * @return
 	 */
 	@PostMapping("/list")

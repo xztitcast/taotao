@@ -29,7 +29,7 @@
 		<commons-lang.version>2.6</commons-lang.version>
 		<commons-io.version>2.11.0</commons-io.version>
 	  	<hutool-all.version>5.8.8</hutool-all.version>
-		<fastjson2.version>2.0.34</fastjson2.version>
+		<fastjson2.version>2.0.38</fastjson2.version>
 		<cos_api.version>5.6.106</cos_api.version>
 	  	<kaptcha.version>2.3.2</kaptcha.version>
 		<shiro.version>1.11.0</shiro.version>

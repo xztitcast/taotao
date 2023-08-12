@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper,  Classroo
 	}
 
 	@Override
-	public Classroom getEntity(Serializable id) {
+	public Classroom getEntity(Long id) {
 		Classroom entity = this.getById(id);
 		ClassroomContent cc = classroomContentService.getEntity(id);
 		entity.setContent(cc.getContent());
@@ -85,8 +86,8 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper,  Classroo
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

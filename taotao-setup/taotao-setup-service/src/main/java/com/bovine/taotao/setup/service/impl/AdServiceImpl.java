@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -41,7 +42,7 @@ public class AdServiceImpl extends ServiceImpl<AdMapper, Ad> implements IService
 	}
 
 	@Override
-	public Ad getEntity(Serializable id) {
+	public Ad getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -60,8 +61,8 @@ public class AdServiceImpl extends ServiceImpl<AdMapper, Ad> implements IService
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 	
 }

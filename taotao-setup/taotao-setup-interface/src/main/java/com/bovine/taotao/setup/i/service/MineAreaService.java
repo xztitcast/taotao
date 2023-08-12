@@ -3,7 +3,7 @@ package com.bovine.taotao.setup.i.service;
 import java.util.List;
 
 import com.bovine.taotao.common.core.BaseModel;
-import com.bovine.taotao.common.core.injecter.BaseService;
+import com.bovine.taotao.common.core.injecter.FrameworkService;
 import com.bovine.taotao.setup.entity.MineArea;
 import com.bovine.taotao.setup.view.MineAreaView;
 
@@ -12,7 +12,7 @@ import com.bovine.taotao.setup.view.MineAreaView;
  * @author eden
  * @date 2023年3月2日 下午8:17:07
  */
-public interface MineAreaService extends BaseService<MineArea, BaseModel> {
+public interface MineAreaService extends FrameworkService<MineArea, Long> {
 
 	/**
 	 * 获取区域数据列表

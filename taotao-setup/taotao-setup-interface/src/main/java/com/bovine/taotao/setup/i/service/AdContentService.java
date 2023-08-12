@@ -3,7 +3,7 @@ package com.bovine.taotao.setup.i.service;
 import java.util.List;
 
 import com.bovine.taotao.common.core.BaseModel;
-import com.bovine.taotao.common.core.injecter.BaseService;
+import com.bovine.taotao.common.core.injecter.FrameworkService;
 import com.bovine.taotao.setup.entity.AdContent;
 import com.bovine.taotao.setup.model.AdContentModel;
 
@@ -12,7 +12,7 @@ import com.bovine.taotao.setup.model.AdContentModel;
  * @author eden
  * @date 2023年2月11日 下午4:27:14
  */
-public interface AdContentService extends BaseService<AdContent, BaseModel> {
+public interface AdContentService extends FrameworkService<AdContent, Long> {
 	
 	/**
 	 * 获取广告内容

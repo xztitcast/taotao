@@ -30,7 +30,7 @@ public class MineController {
 	
 	/**
 	 * 查询单条数据
-	 * @param id
+	 * @param tisid
 	 * @return
 	 */
 	@GetMapping("/info")

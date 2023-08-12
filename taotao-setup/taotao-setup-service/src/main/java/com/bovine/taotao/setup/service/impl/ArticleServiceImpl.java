@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	@Override
-	public Article getEntity(Serializable id) {
+	public Article getEntity(Long id) {
 		Article entity = this.getById(id);
 		ArticleContent ac = articleContentService.getEntity(id);
 		entity.setContent(ac.getContent());
@@ -85,8 +86,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

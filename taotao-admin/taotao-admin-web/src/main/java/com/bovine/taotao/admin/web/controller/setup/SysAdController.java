@@ -15,6 +15,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,8 +102,8 @@ public class SysAdController {
 	@Log("删除广告位数据")
 	@DeleteMapping("/delete")
 	@PreAuthorize("hasAuthority('sys:ad:delete')")
-	public R delete(@RequestBody Integer[] ids) {
-		boolean delete = adService.delete(ids);
+	public R delete(@RequestBody Long[] ids) {
+		boolean delete = adService.delete(Arrays.asList(ids));
 		if(delete) {
 			return R.ok();
 		}

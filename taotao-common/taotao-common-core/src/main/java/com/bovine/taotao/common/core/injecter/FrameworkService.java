@@ -1,6 +1,7 @@
 package com.bovine.taotao.common.core.injecter;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import com.bovine.taotao.common.core.BaseModel;
 import com.bovine.taotao.common.core.P;
@@ -10,23 +11,23 @@ import com.bovine.taotao.common.core.P;
  * @author eden
  * @date 2023年2月10日 下午2:52:31
  * @param <T>
- * @param <M>
+ * @param <ID>
  */
-public interface BaseService<T, M extends BaseModel> {
+public interface FrameworkService<T, ID extends Serializable> {
 
 	/**
 	 * 分页获取基准数据列表
 	 * @param m
 	 * @return
 	 */
-	default P<T> getBaseList(M m){return null;};
+	default P<T> getBaseList(BaseModel m){return null;};
 	
 	/**
 	 * 获取单个对象
 	 * @param id
 	 * @return
 	 */
-	default T getEntity(Serializable id) {return null;};
+	default T getEntity(ID id) {return null;};
 	
 	/**
 	 * 保存单个对象
@@ -43,9 +44,16 @@ public interface BaseService<T, M extends BaseModel> {
 	default boolean updateEntity(T t) {return false;};
 	
 	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	default boolean delete(Collection<ID> ids) {return false;};
+
+	/**
 	 * 删除
 	 * @param id
 	 * @return
 	 */
-	default boolean delete(Serializable[] id) {return false;};
+	default boolean delete(ID id){return false;};
 }
