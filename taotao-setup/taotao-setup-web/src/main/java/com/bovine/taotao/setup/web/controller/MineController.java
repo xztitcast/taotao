@@ -31,7 +31,7 @@ public class MineController {
 	/**
 	 * 查询单条数据
 	 * @param tisid
-	 * @return
+	 * @return R
 	 */
 	@GetMapping("/info")
 	public R info(@RequestHeader Long tisid) {

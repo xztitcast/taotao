@@ -13,22 +13,42 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public abstract class BaseController {
 
+	/**
+	 * 获取用户信息
+	 * @return SysUser
+	 */
 	protected SysUser getUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		LoginUserDetails principal = (LoginUserDetails) authentication.getPrincipal();
 		return principal.getSysUser();
 	}
-	
+
+	/**
+	 * 获取用户ID
+	 * @return Long
+	 */
 	protected Long getUserId() {
 		return getUser().getId();
 	}
 
-	protected String getUserName() {return getUser().getUsername();}
-	
+	/**
+	 * 获取用户名
+	 * @return String
+	 */
+	protected String getUsername() {return getUser().getUsername();}
+
+	/**
+	 * 获取机构ID
+	 * @return Long
+	 */
 	protected Long getTisid() {
 		return getUser().getTisid();
 	}
-	
+
+	/**
+	 * 获取机构名称
+	 * @return String
+	 */
 	protected String getTisname() {
 		return getUser().getTisname();
 	}

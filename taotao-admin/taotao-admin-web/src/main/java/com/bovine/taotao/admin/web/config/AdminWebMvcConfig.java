@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import com.bovine.taotao.admin.web.filter.AuthenticationTokenFilter;
 import com.bovine.taotao.admin.web.security.*;
+import com.bovine.taotao.common.core.kit.PathMatcherHelper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +120,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 		public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 			ServerHttpRequest request = exchange.getRequest();
 			String uri = request.getURI().getRawPath();
-			if(!isMatch(deviceConfig.getUrls(), uri)) {
+			if(!PathMatcherHelper.isMatch(deviceConfig.getUrls(), uri)) {
 				HttpHeaders headers = request.getHeaders();
 				String tisid= headers.getFirst(Constant.TISSID);
 				String ssid = headers.getFirst(Constant.TOKEN_SSID);
@@ -134,31 +135,6 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 				}
 			}
 			return chain.filter(exchange);
-		}
-
-		/**
-		 * 路由匹配
-		 * @param patterns 路由匹配符集合
-		 * @param path 被匹配的路由
-		 * @return 是否匹配成功
-		 */
-		protected boolean isMatch(Set<String> patterns, String path) {
-			for (String pattern : patterns) {
-				if (isMatch(pattern, path)) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		/**
-		 * 路由匹配
-		 * @param pattern 路由匹配符
-		 * @param path 被匹配的路由
-		 * @return 是否匹配成功
-		 */
-		protected boolean isMatch(String pattern, String path) {
-			return pathMatcher.match(pattern, path);
 		}
 
 		/**

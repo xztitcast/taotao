@@ -8,7 +8,7 @@ server:
   
 spring:
   application:
-    name: smart-framework-service
+    name: taotao-framework-service
   lifecycle:
     timeout-per-shutdown-phase: 30S
   profiles:
@@ -85,7 +85,7 @@ management:
 mybatis-plus:
   mapper-locations:
   - classpath:mapper/**/*.xml
-  typeAliasesPackage: com.bovine.taotao.core.entity
+  typeAliasesPackage: com.bovine.taotao.framework.entity
   global-config:
     banner: false
   configuration:
