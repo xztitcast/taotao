@@ -2,30 +2,31 @@ package com.bovine.taotao.common.redis;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.bovine.taotao.common.redis.jedis.JedisClient;
+import com.bovine.taotao.common.redis.jedis.JedisClientCluster;
+import com.bovine.taotao.common.redis.jedis.JedisClientPool;
 import com.bovine.taotao.common.redis.kit.RedisLockHelper;
+import com.bovine.taotao.common.redis.processor.JedisPoolThreadLocal;
+import com.bovine.taotao.common.redis.processor.RedisDbIndexThreadLocal;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.ReflectionUtils;
 
 import com.bovine.taotao.common.redis.processor.RedisDbIndexSwitchProcessor;
-import com.bovine.taotao.common.redis.processor.RedisDbIndexThreadLocal;
+import redis.clients.jedis.*;
 
 /**
  * 数据字典redis配置
@@ -52,7 +53,7 @@ public class RedisTemplateAutoConfiguration {
 		this.redisProperties = redisProperties;
 	}
 	
-	@Primary
+	/*@Primary
 	@Bean(name = "stringRedisTemplate")
 	public StringRedisTemplate stringRedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
 		final int database = jedisConnectionFactory.getDatabase();
@@ -71,7 +72,7 @@ public class RedisTemplateAutoConfiguration {
 				return super.preProcessConnection(connection, existingConnection);
 			}
 		};
-	}
+	}*/
 	
 	@SuppressWarnings("unchecked")
 	@Bean(destroyMethod = "shutdown")
@@ -173,25 +174,39 @@ public class RedisTemplateAutoConfiguration {
         return new RedisLockHelper(redissonClient);
     }
 
-    @Configuration
-    @ConditionalOnClass(RedisProperties.class)
-    public static class JedisClientFactoryBean implements FactoryBean<JedisClient> {
-
-        private final RedisProperties redisProperties;
-
-        public JedisClientFactoryBean(RedisProperties redisProperties) {
-            this.redisProperties = redisProperties;
+    /**
+     * JedisClient
+     * redis缓存jedis客户端
+     * 需要切换库时配置DbIndex注解一起配置使用
+     * 常规缓存操作请使用RedisTemplate
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public JedisClient jedisClient() {
+        if(this.redisProperties.getCluster() != null) {
+            Set<HostAndPort> set = this.redisProperties.getCluster().getNodes().stream().map(HostAndPort::from).collect(Collectors.toSet());
+            JedisCluster jedisCluster = new JedisCluster(set);
+            JedisClient jedisClient = new JedisClientCluster(jedisCluster);
+            return jedisClient;
+        }else {
+            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+            JedisPool jedisPool = new JedisPool(jedisPoolConfig, this.redisProperties.getHost(), this.redisProperties.getPort(), 5000, this.redisProperties.getPassword(), this.redisProperties.getDatabase());
+            JedisClient jedisClient = new JedisClientPool();
+            return (JedisClient)Proxy.newProxyInstance(jedisClient.getClass().getClassLoader(), jedisClient.getClass().getInterfaces(), (proxy, method, args) -> {
+                Jedis jedis = jedisPool.getResource();
+                jedis.select(RedisDbIndexThreadLocal.getIndex());
+                JedisPoolThreadLocal.setJedis(jedis);
+                try{
+                    return method.invoke(jedisClient, args);
+                }finally {
+                    jedis.close();
+                    JedisPoolThreadLocal.remove();
+                    RedisDbIndexThreadLocal.remove();
+                }
+            });
         }
 
-        @Override
-        public JedisClient getObject() throws Exception {
-            return null;
-        }
-
-        @Override
-        public Class<JedisClient> getObjectType() {
-            return JedisClient.class;
-        }
     }
 	
 }
