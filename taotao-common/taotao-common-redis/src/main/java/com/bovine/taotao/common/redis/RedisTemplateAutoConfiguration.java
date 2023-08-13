@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.bovine.taotao.common.redis.jedis.JedisClient;
+import com.bovine.taotao.common.redis.kit.RedisLockHelper;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
@@ -157,5 +161,37 @@ public class RedisTemplateAutoConfiguration {
 	public RedisDbIndexSwitchProcessor redisDbIndexSwitchProcessor() {
 		return new RedisDbIndexSwitchProcessor();
 	}
+
+    /**
+     * redis 锁工具
+     * @param redissonClient
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public RedisLockHelper redisLockHelper(RedissonClient redissonClient) {
+        return new RedisLockHelper(redissonClient);
+    }
+
+    @Configuration
+    @ConditionalOnClass(RedisProperties.class)
+    public static class JedisClientFactoryBean implements FactoryBean<JedisClient> {
+
+        private final RedisProperties redisProperties;
+
+        public JedisClientFactoryBean(RedisProperties redisProperties) {
+            this.redisProperties = redisProperties;
+        }
+
+        @Override
+        public JedisClient getObject() throws Exception {
+            return null;
+        }
+
+        @Override
+        public Class<JedisClient> getObjectType() {
+            return JedisClient.class;
+        }
+    }
 	
 }
