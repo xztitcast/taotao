@@ -1,5 +1,6 @@
 package com.bovine.taotao.serve.gateway.filter;
 
+import com.bovine.taotao.common.core.kit.PathMatcherHelper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -26,7 +27,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class AuthenticationTokenFilter extends AbstractPathMatcherGatewayFilter implements GlobalFilter, Ordered {
+public class AuthenticationTokenFilter implements GlobalFilter, Ordered {
 	
 	private TaotaoGatewayProperties properties;
 	
@@ -42,7 +43,7 @@ public class AuthenticationTokenFilter extends AbstractPathMatcherGatewayFilter 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
-		if(!isMatch(this.properties.getIgnore(), request.getURI().getRawPath())) {
+		if(!PathMatcherHelper.isMatch(this.properties.getIgnore(), request.getURI().getRawPath())) {
 			try {
 	        	Claims claims = JwtTokenManager.parse(request.getHeaders().getFirst("Authorization"));
 	        	request.mutate().header(JwtTokenManager.SUBJECT_HEADER, claims.getSubject()).build();

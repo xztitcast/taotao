@@ -20,37 +20,37 @@ public class JedisClientPool implements JedisClient {
 	}
 
 	@Override
-	public Boolean exists(String key) {
+	public boolean exists(String key) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Boolean result = jedis.exists(key);
+		boolean result = jedis.exists(key);
 		return result;
 	}
 
 	@Override
-	public Long expire(String key, int seconds) {
+	public long expire(String key, int seconds) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Long result = jedis.expire(key, seconds);
+		long result = jedis.expire(key, seconds);
 		return result;
 	}
 
 	@Override
-	public Long ttl(String key) {
+	public long ttl(String key) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Long result = jedis.ttl(key);
+		long result = jedis.ttl(key);
 		return result;
 	}
 
 	@Override
-	public Long incr(String key) {
+	public long incr(String key) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Long result = jedis.incr(key);
+		long result = jedis.incr(key);
 		return result;
 	}
 
 	@Override
-	public Long hset(String key, String field, String value) {
+	public long hset(String key, String field, String value) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Long result = jedis.hset(key, field, value);
+		long result = jedis.hset(key, field, value);
 		return result;
 	}
 
@@ -62,9 +62,9 @@ public class JedisClientPool implements JedisClient {
 	}
 
 	@Override
-	public Long hdel(String key, String... field) {
+	public long hdel(String key, String... field) {
 		Jedis jedis = JedisPoolThreadLocal.getJedis();
-		Long result = jedis.hdel(key, field);
+		long result = jedis.hdel(key, field);
 		return result;
 	}
 

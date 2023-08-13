@@ -25,27 +25,27 @@ public class JedisClientCluster implements JedisClient {
 	}
 
 	@Override
-	public Boolean exists(String key) {
+	public boolean exists(String key) {
 		return jedisCluster.exists(key);
 	}
 
 	@Override
-	public Long expire(String key, int seconds) {
+	public long expire(String key, int seconds) {
 		return jedisCluster.expire(key, seconds);
 	}
 
 	@Override
-	public Long ttl(String key) {
+	public long ttl(String key) {
 		return jedisCluster.ttl(key);
 	}
 
 	@Override
-	public Long incr(String key) {
+	public long incr(String key) {
 		return jedisCluster.incr(key);
 	}
 
 	@Override
-	public Long hset(String key, String field, String value) {
+	public long hset(String key, String field, String value) {
 		return jedisCluster.hset(key, field, value);
 	}
 
@@ -55,7 +55,7 @@ public class JedisClientCluster implements JedisClient {
 	}
 
 	@Override
-	public Long hdel(String key, String... field) {
+	public long hdel(String key, String... field) {
 		return jedisCluster.hdel(key, field);
 	}
 

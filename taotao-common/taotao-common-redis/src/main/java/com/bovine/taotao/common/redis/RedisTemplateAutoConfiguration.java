@@ -194,15 +194,17 @@ public class RedisTemplateAutoConfiguration {
             JedisPool jedisPool = new JedisPool(jedisPoolConfig, this.redisProperties.getHost(), this.redisProperties.getPort(), 5000, this.redisProperties.getPassword(), this.redisProperties.getDatabase());
             JedisClient jedisClient = new JedisClientPool();
             return (JedisClient)Proxy.newProxyInstance(jedisClient.getClass().getClassLoader(), jedisClient.getClass().getInterfaces(), (proxy, method, args) -> {
+                Integer index = RedisDbIndexThreadLocal.getIndex();
                 Jedis jedis = jedisPool.getResource();
-                jedis.select(RedisDbIndexThreadLocal.getIndex());
+                if(index != null && index >= 0) {
+                    jedis.select(index);
+                }
                 JedisPoolThreadLocal.setJedis(jedis);
                 try{
                     return method.invoke(jedisClient, args);
                 }finally {
                     jedis.close();
                     JedisPoolThreadLocal.remove();
-                    RedisDbIndexThreadLocal.remove();
                 }
             });
         }

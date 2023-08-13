@@ -22,7 +22,7 @@ public interface JedisClient {
 	 * @param key
 	 * @return
 	 */
-	Boolean exists(String key);
+	boolean exists(String key);
 
 	/**
 	 * 设置过期时间
@@ -30,21 +30,21 @@ public interface JedisClient {
 	 * @param seconds
 	 * @return
 	 */
-	Long expire(String key, int seconds);
+	long expire(String key, int seconds);
 
 	/**
 	 * 查看有效期
 	 * @param key
 	 * @return
 	 */
-	Long ttl(String key);
+	long ttl(String key);
 
 	/**
 	 * 自增
 	 * @param key
 	 * @return
 	 */
-	Long incr(String key);
+	long incr(String key);
 
 	/**
 	 * redis hash类型 hset
@@ -53,7 +53,7 @@ public interface JedisClient {
 	 * @param value
 	 * @return
 	 */
-	Long hset(String key, String field, String value);
+	long hset(String key, String field, String value);
 
 	/**
 	 * redis hash类型hget
@@ -69,5 +69,5 @@ public interface JedisClient {
 	 * @param field
 	 * @return
 	 */
-	Long hdel(String key, String... field);
+	long hdel(String key, String... field);
 }
