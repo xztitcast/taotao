@@ -1,5 +1,7 @@
 package com.bovine.taotao.admin.web.security;
 
+import cn.hutool.core.lang.Validator;
+import com.bovine.taotao.admin.web.support.MetadataEncoderParser;
 import com.bovine.taotao.common.core.utils.AESBUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,13 +27,16 @@ public class MultiplePasswordEncoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {
+        if(Validator.isHex(rawPassword)) {
+            rawPassword = MetadataEncoderParser.parse(rawPassword.toString());
+        }
         return this.passwordEncoder.encode(rawPassword);
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        String decrypt = AESBUtil.decrypt(rawPassword.toString(), false);
-        return this.passwordEncoder.matches(decrypt, encodedPassword);
+        String password = MetadataEncoderParser.parse(rawPassword.toString());
+        return this.passwordEncoder.matches(password, encodedPassword);
     }
 
     @Override

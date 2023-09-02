@@ -52,9 +52,9 @@ public class SysMineController extends BaseController {
 			entity.setTisid(getTisid());
 			entity.setTisname(getTisname());
 			entity.setCreator(getUserId());
-			entity.setCreateName(getUserName());
+			entity.setCreateName(getUsername());
 			entity.setUpdater(getUserId());
-			entity.setUpdateName(getUserName());
+			entity.setUpdateName(getUsername());
 			entity = mineService.saveEntity(entity);
 		}
 		return R.ok(entity);

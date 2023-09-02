@@ -1,6 +1,16 @@
 package com.bovine.taotao.common.core;
 
 public interface Constant {
+
+	/**
+	 * 分隔符
+	 */
+	String DELIMITER = ".";
+
+	/**
+	 * 十六进制补位
+	 */
+	String SM_HEX = "04";
 	
 	/**
 	 * 机构常量
@@ -11,11 +21,6 @@ public interface Constant {
 	 * token标识符常量
 	 */
 	String TOKEN_SSID = "tokenssid";
-	
-	/**
-	 * redis限流通过后响应给前端的响应头KEY
-	 */
-	String LIMIT_TOKEN_HEADER = "X-RateLimit-Pass-Token";
 
 	/**
 	 * 经度
@@ -74,32 +79,6 @@ public interface Constant {
     }
     
     /**
-     * 定时任务状态
-     * @author eden
-     * @time 2022年7月22日 下午3:48:41
-     */
-    public enum ScheduleStatus {
-        /**
-         * 正常
-         */
-    	NORMAL(0),
-        /**
-         * 暂停
-         */
-    	PAUSE(1);
-
-        private int value;
-
-        ScheduleStatus(int value) {
-            this.value = value;
-        }
-        
-        public int getValue() {
-            return value;
-        }
-    }
-    
-    /**
      * 字典模板
      * @author eden
      * @date 2022年11月20日 下午6:31:29
@@ -112,33 +91,6 @@ public interface Constant {
     }
 
 	/**
-	 * 是否有效状态 描述
-	 * @author eden
-	 * @date 2022年11月20日 下午6:31:29
-	 */
-	public enum ValidStatus {
-		/**
-		 * 无效
-		 */
-		IN_VALID(0),
-		/**
-		 * 有效
-		 */
-		VALID(1);
-
-		private int value;
-
-		ValidStatus(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
-	}
-
-
-	/**
 	 * 有效公告条数限制 描述
 	 * @author eden
 	 * @date 2022年11月20日 下午6:31:29
@@ -146,46 +98,6 @@ public interface Constant {
 	public interface ValidNoticeLimit {
 		int VALID_LIMIT = 5;
 	}
-
-	/**
-	 * 审核状态 描述
-	 * 申请状态 1:待审核 2:审核中 3:审核成功 4:审核失败
-	 * @author eden
-	 * @date 2022年11月20日 下午6:31:29
-	 */
-	public enum AuditStatus {
-
-		/**
-		 * 待审核
-		 */
-		AUDIT_WAIT(1),
-
-		/**
-		 * 审核中
-		 */
-		AUDIT_IN(2),
-
-		/**
-		 * 审核成功
-		 */
-		AUDIT_SUCCESS(3),
-
-		/**
-		 * 审核失败
-		 */
-		AUDIT_FAIL(4);
-
-		private int value;
-
-		AuditStatus(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
-	}
-
 
 	/**
      * Redis Key接口统一进行管理
@@ -231,5 +143,31 @@ public interface Constant {
 		String SYS_LOGIN_LOCKED_KEY = "TT:SYS:LOCKED:";
     	
     }
+
+	/**
+	 * 常用正则表达式
+	 */
+	interface RegExp {
+
+		/**
+		 * 邮箱
+		 */
+		String REX_EMAIL = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+
+		/**
+		 * 域名
+		 */
+		String REG_DOMAIN = "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?";
+
+		/**
+		 * 强密码(大小写、数字、特殊符号)
+		 */
+		String REX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?_]{8,32}";
+
+		/**
+		 * 手机号
+		 */
+		String REG_MOBILE = "^1[356789]\\d{9}$";
+	}
     
 }
