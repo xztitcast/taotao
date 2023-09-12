@@ -14,5 +14,6 @@
   	<module>taotao-common-mybatis</module>
   	<module>taotao-common-redis</module>
   	<module>taotao-common-security</module>
+  	<module>taotao-common-captcha</module>
   </modules>
 </project>
