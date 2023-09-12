@@ -1,7 +1,7 @@
 package com.bovine.taotao.setup.i.service;
 
 import com.bovine.taotao.common.core.BaseModel;
-import com.bovine.taotao.common.core.injecter.BaseService;
+import com.bovine.taotao.common.core.injecter.FrameworkService;
 import com.bovine.taotao.setup.entity.Mine;
 
 /**
@@ -9,7 +9,7 @@ import com.bovine.taotao.setup.entity.Mine;
  * @author eden
  * @date 2023年3月2日 下午8:13:04
  */
-public interface MineService extends BaseService<Mine, BaseModel> {
+public interface MineService extends FrameworkService<Mine, Integer> {
 
 	/**
 	 * 获取我的页面配置

@@ -24,7 +24,7 @@ import com.bovine.taotao.setup.mapper.AgreementMapper;
 public class AgreementServiceImpl extends ServiceImpl<AgreementMapper, Agreement> implements IService<Agreement>, AgreementService {
 
 	@Override
-	public Agreement getEntity(Serializable id) {
+	public Agreement getEntity(Integer id) {
 		return this.getById(id);
 	}
 

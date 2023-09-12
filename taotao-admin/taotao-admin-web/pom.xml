@@ -18,6 +18,11 @@
    		<artifactId>taotao-common-mybatis</artifactId>
    		<version>${project.version}</version>
 	</dependency>
+    <dependency>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>taotao-setup-interface</artifactId>
+		<version>${project.version}</version>
+	</dependency>
   	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>

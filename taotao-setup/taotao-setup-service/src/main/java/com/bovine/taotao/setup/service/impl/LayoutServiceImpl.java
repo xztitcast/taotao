@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class LayoutServiceImpl extends ServiceImpl<LayoutMapper, Layout> impleme
 	}
 
 	@Override
-	public Layout getEntity(Serializable id) {
+	public Layout getEntity(Integer id) {
 		return this.getById(id);
 	}
 
@@ -58,8 +59,8 @@ public class LayoutServiceImpl extends ServiceImpl<LayoutMapper, Layout> impleme
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Integer> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

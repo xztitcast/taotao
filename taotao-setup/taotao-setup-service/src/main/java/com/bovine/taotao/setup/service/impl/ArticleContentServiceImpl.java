@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import com.bovine.taotao.setup.mapper.ArticleContentMapper;
 public class ArticleContentServiceImpl extends ServiceImpl<ArticleContentMapper, ArticleContent> implements IService<ArticleContent>, ArticleContentService {
 
 	@Override
-	public ArticleContent getEntity(Serializable id) {
+	public ArticleContent getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -40,8 +41,8 @@ public class ArticleContentServiceImpl extends ServiceImpl<ArticleContentMapper,
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	

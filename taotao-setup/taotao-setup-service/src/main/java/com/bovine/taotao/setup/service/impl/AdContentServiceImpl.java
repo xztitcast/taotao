@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class AdContentServiceImpl extends ServiceImpl<AdContentMapper, AdContent
 	}
 
 	@Override
-	public AdContent getEntity(Serializable id) {
+	public AdContent getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -65,8 +66,8 @@ public class AdContentServiceImpl extends ServiceImpl<AdContentMapper, AdContent
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

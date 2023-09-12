@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -41,7 +42,7 @@ public class ClassroomCategoryServiceImpl extends ServiceImpl<ClassroomCategoryM
 	}
 
 	@Override
-	public ClassroomCategory getEntity(Serializable id) {
+	public ClassroomCategory getEntity(Integer id) {
 		return this.getById(id);
 	}
 
@@ -60,8 +61,8 @@ public class ClassroomCategoryServiceImpl extends ServiceImpl<ClassroomCategoryM
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Integer> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

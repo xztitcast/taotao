@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class MineServiceImpl extends ServiceImpl<MineMapper, Mine> implements IS
 	}
 
 	@Override
-	public Mine getEntity(Serializable id) {
+	public Mine getEntity(Integer id) {
 		return this.getById(id);
 	}
 
@@ -51,8 +52,8 @@ public class MineServiceImpl extends ServiceImpl<MineMapper, Mine> implements IS
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Integer> ids) {
+		return this.removeBatchByIds(ids);
 	}
 	
 	@Override

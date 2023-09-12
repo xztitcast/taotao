@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class MineAreaServiceImpl extends ServiceImpl<MineAreaMapper, MineArea> i
 	private MineModuleAreaService minModuleAreaService;
 
 	@Override
-	public MineArea getEntity(Serializable id) {
+	public MineArea getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -63,8 +64,8 @@ public class MineAreaServiceImpl extends ServiceImpl<MineAreaMapper, MineArea> i
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.bovine.taotao.setup.service.impl;
 
-import java.io.Serializable;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +46,7 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
 
 
 	@Override
-	public Module getEntity(Serializable id) {
+	public Module getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -63,8 +62,8 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
 	}
 
 	@Override
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	@Override

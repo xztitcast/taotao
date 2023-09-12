@@ -1,5 +1,6 @@
 package com.bovine.taotao.admin.web.config;
 
+import com.bovine.taotao.admin.web.filter.AdministratorFilter;
 import com.bovine.taotao.admin.web.filter.XssFilter;
 import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -21,6 +22,17 @@ public class FilterConfig {
         registration.setFilter(new XssFilter());
         registration.addUrlPatterns("/*");
         registration.setName("xssFilter");
+        registration.setOrder(Integer.MAX_VALUE - 1);
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean<AdministratorFilter> administratorFilterRegistration() {
+        FilterRegistrationBean<AdministratorFilter> registration = new FilterRegistrationBean<>();
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
+        registration.setFilter(new AdministratorFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("administratorFilter");
         registration.setOrder(Integer.MAX_VALUE);
         return registration;
     }

@@ -2,6 +2,7 @@ package com.bovine.taotao.setup.service.impl;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import com.bovine.taotao.setup.mapper.ClassroomContentMapper;
 public class ClassroomContentServiceImpl extends ServiceImpl<ClassroomContentMapper, ClassroomContent> implements IService<ClassroomContent>, ClassroomContentService {
 
 	@Override
-	public ClassroomContent getEntity(Serializable id) {
+	public ClassroomContent getEntity(Long id) {
 		return this.getById(id);
 	}
 
@@ -42,8 +43,8 @@ public class ClassroomContentServiceImpl extends ServiceImpl<ClassroomContentMap
 
 	@Override
 	@Transactional
-	public boolean delete(Serializable[] id) {
-		return this.removeBatchByIds(Arrays.asList(id));
+	public boolean delete(Collection<Long> ids) {
+		return this.removeBatchByIds(ids);
 	}
 
 	
