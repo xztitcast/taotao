@@ -32,6 +32,7 @@
 		<fastjson2.version>2.0.38</fastjson2.version>
 		<cos_api.version>5.6.106</cos_api.version>
 	  	<kaptcha.version>2.3.2</kaptcha.version>
+	  	<captcha.version>1.3.0</captcha.version>
 		<shiro.version>1.11.0</shiro.version>
 	  	<jsoup.version>1.16.1</jsoup.version>
 		<dubbo.version>3.2.2</dubbo.version>
@@ -198,6 +199,11 @@
 			<groupId>com.github.binarywang</groupId>
 			<artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
 			<version>${wx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.anji-plus</groupId>
+			<artifactId>captcha</artifactId>
+			<version>${captcha.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>

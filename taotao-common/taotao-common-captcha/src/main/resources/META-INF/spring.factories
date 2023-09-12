@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.jc.smart.common.captcha.CaptchaAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.bovine.taotao.common.captcha.CaptchaAutoConfiguration
