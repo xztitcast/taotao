@@ -18,6 +18,11 @@
    		<artifactId>taotao-common-mybatis</artifactId>
    		<version>${project.version}</version>
 	</dependency>
+  	<dependency>
+	  	<groupId>${project.groupId}</groupId>
+		<artifactId>taotao-common-captcha</artifactId>
+		<version>${project.version}</version>
+  	</dependency>
     <dependency>
 		<groupId>${project.groupId}</groupId>
 		<artifactId>taotao-setup-interface</artifactId>

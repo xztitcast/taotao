@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bovine.taotao.admin.web.entity.SysDevice;
 import com.bovine.taotao.admin.web.mapper.SysDeviceMapper;
-import com.bovine.taotao.admin.web.model.DeviceModel;
+import com.bovine.taotao.admin.web.modelAndView.model.DeviceModel;
 import com.bovine.taotao.admin.web.service.SysDeviceService;
 import com.bovine.taotao.common.core.P;
 

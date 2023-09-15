@@ -1,8 +1,6 @@
 package com.bovine.taotao.admin.web.security;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
@@ -14,44 +12,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class MultipleWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
     @Override
     public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-        return new MultipleWebAuthenticationDetails(context, this.redisTemplate);
+        return new MultipleWebAuthenticationDetails(context);
     }
 
     public static class MultipleWebAuthenticationDetails extends WebAuthenticationDetails {
 
-        private boolean verify;
+        private static final long serialVersionUID = 1L;
+
+        private HttpServletRequest request;
 
         public MultipleWebAuthenticationDetails(HttpServletRequest request) {
             super(request);
+            this.request = request;
         }
 
-        public MultipleWebAuthenticationDetails(HttpServletRequest request, RedisTemplate<String, String> redisTemplate) {
-            this(request);
-            String captcha = request.getParameter("captcha");
-            String uuid = request.getParameter("uuid");
-            if(uuid == null || uuid.isBlank()) {
-                this.verify = false;
-            }else {
-                String value = redisTemplate.opsForValue().get(uuid);
-                if(value == null || value.isBlank()) {
-                    this.verify = false;
-                } else if(!value.equals(captcha)) {
-                    this.verify = false;
-                    redisTemplate.delete(uuid);
-                }else {
-                    this.verify = true;
-                    redisTemplate.delete(uuid);
-                }
-            }
-        }
-
-        public boolean isVerify(){
-            return this.verify;
+        public HttpServletRequest getRequest(){
+            return this.request;
         }
     }
 }

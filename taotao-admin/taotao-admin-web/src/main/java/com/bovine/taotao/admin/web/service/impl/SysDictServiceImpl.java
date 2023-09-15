@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bovine.taotao.admin.web.entity.SysDict;
 import com.bovine.taotao.admin.web.mapper.SysDictMapper;
-import com.bovine.taotao.admin.web.model.DictModel;
+import com.bovine.taotao.admin.web.modelAndView.model.DictModel;
 import com.bovine.taotao.admin.web.service.SysDictService;
 import com.bovine.taotao.common.core.Constant.DictTemplate;
 import com.bovine.taotao.common.core.P;

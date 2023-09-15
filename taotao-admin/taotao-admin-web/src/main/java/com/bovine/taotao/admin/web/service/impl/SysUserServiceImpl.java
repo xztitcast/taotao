@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.admin.web.mapper.SysUserMapper;
-import com.bovine.taotao.admin.web.model.UserModel;
+import com.bovine.taotao.admin.web.modelAndView.model.UserModel;
 import com.bovine.taotao.admin.web.service.SysRoleService;
 import com.bovine.taotao.admin.web.service.SysUserRoleService;
 import com.bovine.taotao.admin.web.service.SysUserService;

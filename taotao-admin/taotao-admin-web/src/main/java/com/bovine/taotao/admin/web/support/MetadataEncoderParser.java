@@ -9,8 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.BadCredentialsException;
 
-import static com.bovine.taotao.common.core.Constant.DELIMITER;
-import static com.bovine.taotao.common.core.Constant.SM_HEX;
+import static com.bovine.taotao.common.core.Constant.*;
 
 /**
  * 元数据解析器
@@ -35,7 +34,7 @@ public final class MetadataEncoderParser {
         if(data == null) {
             throw new BadCredentialsException("AES解密异常!");
         }
-        int indexOf = data.indexOf(DELIMITER);
+        int indexOf = data.indexOf(DELIMITER_COMMA);
         if(indexOf == -1) {
             throw new BadCredentialsException("解析数据格式异常!");
         }

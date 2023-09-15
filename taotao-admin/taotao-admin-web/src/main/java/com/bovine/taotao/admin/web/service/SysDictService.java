@@ -2,7 +2,7 @@ package com.bovine.taotao.admin.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bovine.taotao.admin.web.entity.SysDict;
-import com.bovine.taotao.admin.web.model.DictModel;
+import com.bovine.taotao.admin.web.modelAndView.model.DictModel;
 import com.bovine.taotao.common.core.P;
 
 /**

@@ -19,6 +19,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,7 +54,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 	private AuthenticationTokenFilter authenticationTokenFilter;
 
 	@Autowired
-	private MultipleDaoAuthenticationProvider multipleDaoAuthenticationProvider;
+	private DaoAuthenticationProvider daoAuthenticationProvider;
 
 	@Autowired
 	private LockedAuthenticationFailureHandler lockedAuthenticationFailureHandler;
@@ -72,7 +73,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 				.formLogin(login -> login.loginProcessingUrl("/sys/login").authenticationDetailsSource(this.multipleWebAuthenticationDetailsSource).successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
 				.authorizeHttpRequests(request -> request.requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
 				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
-				.authenticationProvider(this.multipleDaoAuthenticationProvider)
+				.authenticationProvider(this.daoAuthenticationProvider)
 				.addFilterBefore(this.authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling(handler -> handler.accessDeniedHandler((request, response, accessDeniedException) -> {
 					response.setContentType(MediaType.APPLICATION_JSON_VALUE);

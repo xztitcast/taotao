@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysRole;
-import com.bovine.taotao.admin.web.model.RoleModel;
+import com.bovine.taotao.admin.web.modelAndView.model.RoleModel;
 import com.bovine.taotao.admin.web.service.SysRoleMenuService;
 import com.bovine.taotao.admin.web.service.SysRoleService;
 import com.bovine.taotao.common.core.Constant;

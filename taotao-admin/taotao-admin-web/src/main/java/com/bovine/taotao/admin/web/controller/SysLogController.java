@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bovine.taotao.admin.web.entity.SysLog;
-import com.bovine.taotao.admin.web.model.UserModel;
+import com.bovine.taotao.admin.web.modelAndView.model.UserModel;
 import com.bovine.taotao.admin.web.service.SysLogService;
 import com.bovine.taotao.common.core.P;
 import com.bovine.taotao.common.core.R;

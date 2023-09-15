@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bovine.taotao.admin.web.entity.SysRole;
-import com.bovine.taotao.admin.web.model.RoleModel;
+import com.bovine.taotao.admin.web.modelAndView.model.RoleModel;
 import com.bovine.taotao.common.core.P;
 
 /**

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
-import com.bovine.taotao.admin.web.model.SmsModel;
+import com.bovine.taotao.admin.web.modelAndView.model.SmsModel;
 import com.bovine.taotao.common.core.Constant.RedisKey;
 import com.bovine.taotao.common.core.S;
 import jakarta.servlet.ServletOutputStream;

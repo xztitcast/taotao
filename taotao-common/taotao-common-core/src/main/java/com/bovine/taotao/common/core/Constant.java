@@ -3,9 +3,49 @@ package com.bovine.taotao.common.core;
 public interface Constant {
 
 	/**
-	 * 分隔符
+	 * SQL常量 取一条
 	 */
-	String DELIMITER = ".";
+	String LIMIT_ONE = "LIMIT 1";
+
+	/**
+	 * 分隔符 .
+	 */
+	String DELIMITER_DOT = ".";
+
+	/**
+	 * 分隔符 -
+	 */
+	String DELIMITER_ROT = "-";
+
+	/**
+	 * 分隔符 :
+	 */
+	String DELIMITER_COLON = ":";
+
+	/**
+	 * 分隔符 ,
+	 */
+	String DELIMITER_COMMA = ",";
+
+	/**
+	 * 总数
+	 */
+	String TOTAL = "TOTAL";
+
+	/**
+	 * 每月
+	 */
+	String MONTH = "MONTH";
+
+	/**
+	 * 每周
+	 */
+	String WEEK = "WEEK";
+
+	/**
+	 * 每天
+	 */
+	String DAY = "DAY";
 
 	/**
 	 * 十六进制补位

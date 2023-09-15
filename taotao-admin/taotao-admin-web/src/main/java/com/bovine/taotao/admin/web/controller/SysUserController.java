@@ -8,7 +8,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysUser;
-import com.bovine.taotao.admin.web.model.PasswordModel;
-import com.bovine.taotao.admin.web.model.UserModel;
+import com.bovine.taotao.admin.web.modelAndView.model.PasswordModel;
+import com.bovine.taotao.admin.web.modelAndView.model.UserModel;
 import com.bovine.taotao.admin.web.service.SysUserRoleService;
 import com.bovine.taotao.admin.web.service.SysUserService;
 import com.bovine.taotao.common.core.P;

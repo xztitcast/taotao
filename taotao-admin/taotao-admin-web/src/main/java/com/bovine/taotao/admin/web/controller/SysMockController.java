@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bovine.taotao.admin.web.entity.SysUser;
-import com.bovine.taotao.admin.web.model.UserModel;
+import com.bovine.taotao.admin.web.modelAndView.model.UserModel;
 import com.bovine.taotao.admin.web.service.SysUserService;
 import com.bovine.taotao.common.core.BaseModel;
 import com.bovine.taotao.common.core.P;
