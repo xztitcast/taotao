@@ -12,5 +12,6 @@
   <modules>
   	<module>taotao-serve-gateway</module>
   	<module>taotao-serve-monitor</module>
+  	<module>taotao-serve-job</module>
   </modules>
 </project>

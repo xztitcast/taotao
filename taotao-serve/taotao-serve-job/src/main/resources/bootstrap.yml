@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: taotao-admin-job
+    name: taotao-serve-job
 
 xxl:
   job:

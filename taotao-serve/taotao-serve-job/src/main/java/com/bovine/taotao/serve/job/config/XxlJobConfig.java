@@ -1,22 +1,14 @@
-package com.bovine.taotao.admin.job.config;
+package com.bovine.taotao.serve.job.config;
 
-import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
-/**
- * xxl-job config
- *
- * @author xuxueli 2017-04-28
- * @author eden 2022-10-10 26:40:10
- */
-@Configuration
-@ConfigurationProperties(prefix = "xxl")
+import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
+
 public class XxlJobConfig implements FactoryBean<XxlJobSpringExecutor> {
-    private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
+
+	private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
     private String adminAddresses;
     
@@ -108,6 +100,4 @@ public class XxlJobConfig implements FactoryBean<XxlJobSpringExecutor> {
      *      3、获取IP
      *          String ip_ = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
      */
-
-
 }

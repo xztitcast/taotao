@@ -2,11 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.bovine</groupId>
-    <artifactId>taotao-admin</artifactId>
+    <artifactId>taotao-serve</artifactId>
     <version>1.0.0</version>
   </parent>
-  <artifactId>taotao-admin-job</artifactId>
-  <name>taotao-admin-job</name>
+  <artifactId>taotao-serve-job</artifactId>
+  <name>taotao-serve-job</name>
+  <description>TT系统服务JOB</description>
   <dependencies>
       <dependency>
           <groupId>org.springframework.boot</groupId>

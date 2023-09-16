@@ -11,6 +11,5 @@
   <description>TT后台管理模块</description>
   <modules>
   	<module>taotao-admin-web</module>
-  	<module>taotao-admin-job</module>
   </modules>
 </project>
