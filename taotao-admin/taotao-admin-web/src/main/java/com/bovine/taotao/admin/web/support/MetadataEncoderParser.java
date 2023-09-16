@@ -34,7 +34,7 @@ public final class MetadataEncoderParser {
         if(data == null) {
             throw new BadCredentialsException("AES解密异常!");
         }
-        int indexOf = data.indexOf(DELIMITER_COMMA);
+        int indexOf = data.indexOf(DELIMITER_DOT);
         if(indexOf == -1) {
             throw new BadCredentialsException("解析数据格式异常!");
         }

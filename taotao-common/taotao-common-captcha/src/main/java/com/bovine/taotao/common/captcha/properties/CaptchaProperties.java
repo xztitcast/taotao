@@ -16,18 +16,18 @@ public class CaptchaProperties {
     /**
      * 滑动拼图底图路径.
      */
-    private String jigsaw = "";
+    private String jigsaw = "classpath:images/jigsaw";
 
     /**
      * 点选文字底图路径.
      */
-    private String picClick = "";
+    private String picClick = "classpath:images/pic-click";
 
 
     /**
      * 右下角水印文字(我的水印).
      */
-    private String waterMark = "丽泽数币通";
+    private String waterMark = "TT管理系统";
 
     /**
      * 右下角水印字体(文泉驿正黑).

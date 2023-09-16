@@ -39,7 +39,7 @@ public enum S {
 
 	USER_NOTFOUND_ERROR(1003, "用户不存在!"),
 
-	USER_PWD_ERROR(1004, "账号或密码错误!"),
+	USER_PWD_ERROR(1004, "账号或密码错误或图片验证码!"),
 
 	USER_INACTIVE_ERROR(1005, "账号已被禁用,请联系管理员!"),
 
