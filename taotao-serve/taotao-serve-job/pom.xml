@@ -64,7 +64,7 @@
             </executions>
             <configuration>
                 <finalName>${project.build.finalName}</finalName>
-                <mainClass>com.bovine.taotao.admin.job.AdminJobApplication</mainClass>
+                <mainClass>com.bovine.taotao.serve.job.AdminJobApplication</mainClass>
             </configuration>
         </plugin>
     </plugins>
