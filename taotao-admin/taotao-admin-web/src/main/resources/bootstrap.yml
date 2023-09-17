@@ -42,9 +42,7 @@ spring:
         - data-id: ${spring.application.name}.yml
           group: DEFAULT_GROUP
           refresh: true
-        - data-id: admin-device.yml
-          group: DEFAULT_GROUP
-          refresh: true
+
 dubbo:
   application:
     qos-enable: false

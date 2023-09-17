@@ -34,10 +34,7 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: ${spring.application.name}.yml
-          group: DEFAULT_GROUP
-          refresh: true
-        - data-id: ${spring.application.name}-redis.yml
+        - data-id: taotao-redis.yml
           group: DEFAULT_GROUP
           refresh: true
     sentinel:
