@@ -37,6 +37,10 @@ spring:
         - data-id: taotao-redis.yml
           group: DEFAULT_GROUP
           refresh: true
+        - data-id: taotao-rabbitmq.yml
+          group: DEFAULT_GROUP
+          refresh: true
+
 dubbo:
   application:
     qos-enable: false

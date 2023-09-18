@@ -121,7 +121,7 @@ public class CaptchaAutoConfiguration {
      * 可能有多个应用使用: 比如 小程序、APP、IOS、商户端、推派等等
      */
     @RestController
-    @RequestMapping("/dynamic/captcha")
+    @RequestMapping("/{module}/dynamic/captcha")
     public static class DynamicCaptchaController {
 
         @Autowired
