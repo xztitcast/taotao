@@ -24,8 +24,19 @@ public final class RedisLockHelper {
     }
 
     /**
+     * 加锁(默认实现)
+     * @param name redis需要枷锁的KEY
+     * @param action 执行函数
+     * @return
+     * @param <T>
+     */
+    public <T> T tryLock(String name, Supplier<T> action) {
+        return tryLock(name, 60000L, 60000L, action);
+    }
+
+    /**
      * 加锁
-     * @param name 需要加锁的名称
+     * @param name redis需要枷锁的KEY
      * @param waitTime 等待时间
      * @param expire 锁过期时间
      * @param action 执行函数

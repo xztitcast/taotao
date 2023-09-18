@@ -34,9 +34,9 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: ${spring.application.name}.yml
+        - data-id: taotao-redis.yml
           group: DEFAULT_GROUP
-          refresh: true        
+          refresh: true
 dubbo:
   application:
     qos-enable: false
