@@ -15,5 +15,7 @@
   	<module>taotao-common-redis</module>
   	<module>taotao-common-security</module>
   	<module>taotao-common-captcha</module>
+  	<module>taotao-common-amqp</module>
+  	<module>taotao-common-mongodb</module>
   </modules>
 </project>
