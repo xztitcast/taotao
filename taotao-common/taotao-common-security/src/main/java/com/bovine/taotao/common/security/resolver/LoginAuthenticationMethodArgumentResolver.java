@@ -1,18 +1,20 @@
 package com.bovine.taotao.common.security.resolver;
 
+import com.bovine.taotao.common.security.session.AuthenticationTokenWebManager;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.alibaba.fastjson2.JSON;
 import com.bovine.taotao.common.core.S;
 import com.bovine.taotao.common.core.exception.custom.AuthenticationException;
-import com.bovine.taotao.common.security.JwtTokenManager;
 import com.bovine.taotao.common.security.annotation.Subject;
-import com.bovine.taotao.common.security.entity.Entity;
-import com.bovine.taotao.common.security.entity.Principal;
+import com.bovine.taotao.common.core.Principal;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 登录验证参数解析器
@@ -23,6 +25,14 @@ import com.bovine.taotao.common.security.entity.Principal;
  */
 public class LoginAuthenticationMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
+	private Pattern pattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$", Pattern.CASE_INSENSITIVE);
+
+	private AuthenticationTokenWebManager authenticationTokenWebManager;
+
+	public LoginAuthenticationMethodArgumentResolver(AuthenticationTokenWebManager authenticationTokenWebManager) {
+		this.authenticationTokenWebManager = authenticationTokenWebManager;
+	}
+
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		return parameter.hasParameterAnnotation(Subject.class);
@@ -30,24 +40,30 @@ public class LoginAuthenticationMethodArgumentResolver implements HandlerMethodA
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		String header = webRequest.getHeader(JwtTokenManager.SUBJECT_HEADER);
-		if(header == null || header.trim().length() == 0) {
+								  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+		String authorization = webRequest.getHeader("Authorization");
+		if(StringUtils.isBlank(authorization)) {
 			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
 		}
-		Principal p = JSON.parseObject(header, Principal.class);
+		Matcher matcher = pattern.matcher(authorization);
+		if(!matcher.matches()) {
+			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
+		}
+		String token = matcher.group("token");
+		if(StringUtils.isBlank(token)) {
+			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
+		}
+		Principal principal = this.authenticationTokenWebManager.getByToken(token);
+		if(principal == null) {
+			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
+		}
 		Subject subject = parameter.getParameterAnnotation(Subject.class);
-		Entity value = subject.value();
-		if(value == Entity.ID) {
-			return p.getUserId();
-		}
-		if(value == Entity.NAME) {
-			return p.getUsername();
-		}
-		if(value == Entity.OPPENID) {
-			return p.getOpenid();
-		}
-		return p;
+		return switch (subject.value()) {
+			case ID -> principal.getId();
+			case NAME -> principal.getMobile();
+			case OPPENID -> principal.getOpenid();
+			default -> principal;
+		};
 	}
 
 }

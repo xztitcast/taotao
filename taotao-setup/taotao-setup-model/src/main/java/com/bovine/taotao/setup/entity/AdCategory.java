@@ -3,7 +3,8 @@ package com.bovine.taotao.setup.entity;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.bovine.taotao.common.mybatis.entity.TissueEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_ad_category")
-public class AdCategory extends TissueEntity<Integer> implements Serializable {
+public class AdCategory extends CreateEntity<Integer> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

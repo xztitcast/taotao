@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @date 2023年2月19日 下午4:17:49
  * @param <T>
  */
-public class CreateEntity<T extends Serializable> extends UpdateEntity<T> {
+public abstract class CreateEntity<T extends Serializable> extends TissueEntity<T> {
 
 	/**
 	 * 创建者(ID)
@@ -19,6 +19,16 @@ public class CreateEntity<T extends Serializable> extends UpdateEntity<T> {
     * 创建人名称
     */
     protected String createName;
+
+	/**
+	 * 更新者(ID)
+	 */
+	protected Long updater;
+
+	/**
+	 * 更新人名称
+	 */
+	protected String updateName;
 
 	public Long getCreator() {
 		return creator;
@@ -34,6 +44,22 @@ public class CreateEntity<T extends Serializable> extends UpdateEntity<T> {
 
 	public void setCreateName(String createName) {
 		this.createName = createName;
+	}
+
+	public Long getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(Long updater) {
+		this.updater = updater;
+	}
+
+	public String getUpdateName() {
+		return updateName;
+	}
+
+	public void setUpdateName(String updateName) {
+		this.updateName = updateName;
 	}
 
 }

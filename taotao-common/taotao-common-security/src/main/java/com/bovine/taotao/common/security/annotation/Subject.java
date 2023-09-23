@@ -7,8 +7,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.bovine.taotao.common.security.entity.Entity;
-
 @Documented
 @Retention(RUNTIME)
 @Target(PARAMETER)

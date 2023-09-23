@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.sql.Time;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.bovine.taotao.common.mybatis.entity.TissueEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_agreement")
-public class Agreement extends TissueEntity<Integer> implements Serializable {
+public class Agreement extends CreateEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

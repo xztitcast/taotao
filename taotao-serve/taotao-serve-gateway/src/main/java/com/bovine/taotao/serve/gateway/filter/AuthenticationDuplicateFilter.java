@@ -19,8 +19,7 @@ import com.bovine.taotao.common.core.Constant.RedisKey;
 import com.bovine.taotao.common.core.Constant.Sys;
 import com.bovine.taotao.common.core.R;
 import com.bovine.taotao.common.core.S;
-import com.bovine.taotao.common.security.JwtTokenManager;
-import com.bovine.taotao.common.security.entity.Principal;
+import com.bovine.taotao.common.core.Principal;
 
 import reactor.core.publisher.Mono;
 
@@ -42,7 +41,7 @@ public class AuthenticationDuplicateFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		StringBuilder sb = new StringBuilder(RedisKey.GATEWAY_DUPLICATE_STR_KEY);
+		/*StringBuilder sb = new StringBuilder(RedisKey.GATEWAY_DUPLICATE_STR_KEY);
 		ServerHttpRequest request = exchange.getRequest();
 		String first = request.getHeaders().getFirst(Sys.TOKEN);
 		if(StringUtils.isNotBlank(first)) sb.append(first);
@@ -63,7 +62,8 @@ public class AuthenticationDuplicateFilter implements GlobalFilter, Ordered {
 			if(principal != null || StringUtils.isNotBlank(first)) {
 				this.redisTemplate.opsForValue().set(sb.toString(), path, 1, TimeUnit.SECONDS);
 			}
-		}));
+		}));*/
+		return chain.filter(exchange);
 	}
 
 }

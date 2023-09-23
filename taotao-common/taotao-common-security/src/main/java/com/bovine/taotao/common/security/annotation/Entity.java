@@ -1,4 +1,4 @@
-package com.bovine.taotao.common.security.entity;
+package com.bovine.taotao.common.security.annotation;
 
 public enum Entity {
 

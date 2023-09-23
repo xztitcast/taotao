@@ -5,7 +5,8 @@ import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.bovine.taotao.common.mybatis.entity.TissueEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_article")
-public class Article extends TissueEntity<Long> implements Serializable {
+public class Article extends CreateEntity<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

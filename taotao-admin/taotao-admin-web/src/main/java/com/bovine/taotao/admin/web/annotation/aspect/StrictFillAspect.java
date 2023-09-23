@@ -4,15 +4,14 @@ import com.bovine.taotao.admin.web.annotation.Fill;
 import com.bovine.taotao.admin.web.annotation.FillType;
 import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 import com.bovine.taotao.common.mybatis.entity.TissueEntity;
-import com.bovine.taotao.common.mybatis.entity.UpdateEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +57,7 @@ public class StrictFillAspect {
 			if(arg instanceof CreateEntity && value == FillType.INSERT) {
 				setCreateEntityEnhance(arg, sysUser);
 			}
-			if(arg instanceof UpdateEntity) {
+			if(value == FillType.UPDATE) {
 				setUpdateEntityEnhance(arg, sysUser);
 			}
 		}
@@ -85,6 +84,7 @@ public class StrictFillAspect {
 		CreateEntity<?> ce = (CreateEntity<?>)arg;
 		ce.setCreator(sysUser.getId());
 		ce.setCreateName(sysUser.getUsername());
+		setUpdateEntityEnhance(arg, sysUser);
 	}
 	
 	/**
@@ -93,8 +93,8 @@ public class StrictFillAspect {
 	 * @param sysUser
 	 */
 	private void setUpdateEntityEnhance(Object arg, SysUser sysUser) {
-		UpdateEntity<?> ue = (UpdateEntity<?>)arg;
-		ue.setUpdateName(sysUser.getUsername());
-		ue.setUpdater(sysUser.getId());
+		CreateEntity<?> ce = (CreateEntity<?>)arg;
+		ce.setUpdateName(sysUser.getUsername());
+		ce.setUpdater(sysUser.getId());
 	}
 }

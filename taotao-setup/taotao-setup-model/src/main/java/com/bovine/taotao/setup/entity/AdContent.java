@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.bovine.taotao.common.mybatis.entity.TissueEntity;
+import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_ad_content")
-public class AdContent extends TissueEntity<Long> implements Serializable {
+public class AdContent extends CreateEntity<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
