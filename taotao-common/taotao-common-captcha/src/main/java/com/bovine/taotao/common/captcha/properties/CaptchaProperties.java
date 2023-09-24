@@ -27,7 +27,7 @@ public class CaptchaProperties {
     /**
      * 右下角水印文字(我的水印).
      */
-    private String waterMark = "TT管理系统";
+    private String waterMark = "滔滔系统";
 
     /**
      * 右下角水印字体(文泉驿正黑).
@@ -92,7 +92,8 @@ public class CaptchaProperties {
      */
     private int reqGetMinuteLimit = 30;
     
-    private int reqCheckMinuteLimit = 60;
+    @SuppressWarnings("unused")
+	private int reqCheckMinuteLimit = 60;
     
     private int reqVerifyMinuteLimit = 60;
 

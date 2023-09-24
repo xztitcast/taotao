@@ -77,7 +77,7 @@ public class RedisTemplateAutoConfiguration {
 	@SuppressWarnings("unchecked")
 	@Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(RedissonClient.class)
-    public RedissonClient redisson() throws IOException {
+    RedissonClient redisson() throws IOException {
         Config config;
         Method clusterMethod = ReflectionUtils.findMethod(RedisProperties.class, "getCluster");
         Method usernameMethod = ReflectionUtils.findMethod(RedisProperties.class, "getUsername");
@@ -159,7 +159,7 @@ public class RedisTemplateAutoConfiguration {
     }
 	
 	@Bean
-	public RedisDbIndexSwitchProcessor redisDbIndexSwitchProcessor() {
+	RedisDbIndexSwitchProcessor redisDbIndexSwitchProcessor() {
 		return new RedisDbIndexSwitchProcessor();
 	}
 
@@ -170,7 +170,7 @@ public class RedisTemplateAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public RedisLockHelper redisLockHelper(RedissonClient redissonClient) {
+    RedisLockHelper redisLockHelper(RedissonClient redissonClient) {
         return new RedisLockHelper(redissonClient);
     }
 
@@ -182,8 +182,9 @@ public class RedisTemplateAutoConfiguration {
      * @return
      */
     @Bean
+    @SuppressWarnings("resource")
     @ConditionalOnMissingBean
-    public JedisClient jedisClient() {
+    JedisClient jedisClient() {
         if(this.redisProperties.getCluster() != null) {
             Set<HostAndPort> set = this.redisProperties.getCluster().getNodes().stream().map(HostAndPort::from).collect(Collectors.toSet());
             JedisCluster jedisCluster = new JedisCluster(set);

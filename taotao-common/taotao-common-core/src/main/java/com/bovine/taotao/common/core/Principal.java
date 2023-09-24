@@ -2,7 +2,6 @@ package com.bovine.taotao.common.core;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.dubbo.config.annotation.DubboService;
 
 import java.io.Serializable;
 import java.util.Date;

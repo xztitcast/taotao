@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     @Bean
-    public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
+    FilterRegistrationBean<XssFilter> xssFilterRegistration() {
         FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.setFilter(new XssFilter());
@@ -27,7 +27,7 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<AdministratorFilter> administratorFilterRegistration() {
+    FilterRegistrationBean<AdministratorFilter> administratorFilterRegistration() {
         FilterRegistrationBean<AdministratorFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.setFilter(new AdministratorFilter());

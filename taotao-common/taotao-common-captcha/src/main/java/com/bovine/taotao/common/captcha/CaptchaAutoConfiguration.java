@@ -39,14 +39,14 @@ import java.util.Properties;
 public class CaptchaAutoConfiguration {
 
     @Bean(name = "captchaCacheService")
-    public CaptchaCacheService captchaCacheService(CaptchaProperties prop){
+    CaptchaCacheService captchaCacheService(CaptchaProperties prop){
         //缓存类型redis/local/....
         return CaptchaServiceFactory.getCache(prop.getCacheType().name());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public CaptchaService captchaService(CaptchaProperties prop) {
+    CaptchaService captchaService(CaptchaProperties prop) {
         Properties config = new Properties();
         config.put(Const.CAPTCHA_CACHETYPE, prop.getCacheType().name());
         config.put(Const.CAPTCHA_WATER_MARK, prop.getWaterMark());

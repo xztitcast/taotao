@@ -19,12 +19,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class TokenManagerAutoConfiguration {
 
     @Bean("loginAuthenticationMethodArgumentResolver")
-    public LoginAuthenticationMethodArgumentResolver resolver(AuthenticationTokenWebManager manager) {
+    LoginAuthenticationMethodArgumentResolver resolver(AuthenticationTokenWebManager manager) {
         return new LoginAuthenticationMethodArgumentResolver(manager);
     }
 
     @Bean("authenticationTokenWebManager")
-    public AuthenticationTokenWebManager manager(RedisTemplate<String, String> redisTemplate) {
+    AuthenticationTokenWebManager manager(RedisTemplate<String, String> redisTemplate) {
         return new DefaultAuthenticationTokenWebManager(redisTemplate);
     }
 }

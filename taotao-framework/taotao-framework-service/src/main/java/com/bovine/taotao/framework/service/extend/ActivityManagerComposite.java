@@ -4,6 +4,8 @@ import com.bovine.taotao.framework.i.service.extend.ActivityComposite;
 import com.bovine.taotao.framework.i.service.extend.ActivityCompositeRequest;
 import com.bovine.taotao.framework.i.service.extend.ActivityCompositeResponse;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  * @author eden
  * @date 2023/9/23 22:14:14
  */
+@Getter
 public class ActivityManagerComposite implements ActivityComposite {
 
     private String name;

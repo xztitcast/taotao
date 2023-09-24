@@ -10,7 +10,6 @@ import com.bovine.taotao.framework.i.service.ActivityContextService;
 import com.bovine.taotao.framework.i.service.ActivityRegionRuleService;
 import com.bovine.taotao.framework.mapper.ActivityRegionRuleMapper;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

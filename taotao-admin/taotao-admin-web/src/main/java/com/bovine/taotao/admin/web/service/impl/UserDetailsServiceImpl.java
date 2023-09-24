@@ -1,8 +1,7 @@
 package com.bovine.taotao.admin.web.service.impl;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.bovine.taotao.admin.web.entity.SysUser;
-import com.bovine.taotao.admin.web.mapper.SysMenuMapper;
-import com.bovine.taotao.admin.web.mapper.SysRoleMapper;
 import com.bovine.taotao.admin.web.service.SysMenuService;
 import com.bovine.taotao.admin.web.service.SysUserService;
 import lombok.Getter;
@@ -45,7 +44,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Setter
     public static class LoginUserDetails implements UserDetails {
 
-        private SysUser sysUser;
+		private static final long serialVersionUID = 1L;
+
+		private SysUser sysUser;
 
         private Set<String> permissions;
 
@@ -55,36 +56,43 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         @Override
+        @JSONField(serialize = false)
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return this.permissions.stream().filter(Objects::nonNull).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }
 
         @Override
+        @JSONField(serialize = false)
         public String getPassword() {
             return sysUser.getPassword();
         }
 
         @Override
+        @JSONField(serialize = false)
         public String getUsername() {
             return sysUser.getUsername();
         }
 
         @Override
+        @JSONField(serialize = false)
         public boolean isAccountNonExpired() {
             return true;
         }
 
         @Override
+        @JSONField(serialize = false)
         public boolean isAccountNonLocked() {
             return new Date().after(sysUser.getLocked());
         }
 
         @Override
+        @JSONField(serialize = false)
         public boolean isCredentialsNonExpired() {
             return true;
         }
 
         @Override
+        @JSONField(serialize = false)
         public boolean isEnabled() {
             return sysUser.getStatus() == 0;
         }

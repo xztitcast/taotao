@@ -1,7 +1,5 @@
 package com.bovine.taotao.setup.service.impl;
 
-import java.io.Serializable;
-
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

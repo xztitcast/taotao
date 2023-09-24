@@ -5,7 +5,6 @@ import com.bovine.taotao.common.core.R;
 import com.bovine.taotao.common.security.session.AuthenticationTokenWebManager;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +21,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/sso/login")
 public class LoginController {
-
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private AuthenticationTokenWebManager authenticationTokenWebManager;

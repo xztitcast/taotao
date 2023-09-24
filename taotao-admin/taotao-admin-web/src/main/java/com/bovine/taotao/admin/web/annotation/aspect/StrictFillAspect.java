@@ -4,7 +4,6 @@ import com.bovine.taotao.admin.web.annotation.Fill;
 import com.bovine.taotao.admin.web.annotation.FillType;
 import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
-import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 import com.bovine.taotao.common.mybatis.entity.TissueEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

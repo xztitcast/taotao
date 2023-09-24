@@ -8,7 +8,6 @@ import com.bovine.taotao.common.security.annotation.Entity;
 import com.bovine.taotao.common.security.annotation.Subject;
 import com.bovine.taotao.framework.entity.Activity;
 import com.bovine.taotao.framework.i.service.ActivityService;
-import com.bovine.taotao.framework.i.service.extend.ActivityCompositeResponse;
 import com.bovine.taotao.framework.model.ActivityJoinModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;

@@ -2,7 +2,6 @@ package com.bovine.taotao.admin.web.security;
 
 import cn.hutool.core.lang.Validator;
 import com.bovine.taotao.admin.web.support.MetadataEncoderParser;
-import com.bovine.taotao.common.core.utils.AESBUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,5 @@
 package com.bovine.taotao.framework.i.service;
 
-import com.bovine.taotao.common.core.BaseModel;
 import com.bovine.taotao.common.core.injecter.FrameworkService;
 import com.bovine.taotao.framework.entity.Tissue;
 

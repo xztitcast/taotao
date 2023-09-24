@@ -56,7 +56,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 	private MultipleWebAuthenticationDetailsSource multipleWebAuthenticationDetailsSource;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception {
 		return httpSecurity.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

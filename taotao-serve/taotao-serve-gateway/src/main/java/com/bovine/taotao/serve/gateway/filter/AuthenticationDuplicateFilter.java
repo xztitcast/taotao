@@ -1,25 +1,12 @@
 package com.bovine.taotao.serve.gateway.filter;
 
-import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.bovine.taotao.common.core.Constant.RedisKey;
-import com.bovine.taotao.common.core.Constant.Sys;
-import com.bovine.taotao.common.core.R;
-import com.bovine.taotao.common.core.S;
-import com.bovine.taotao.common.core.Principal;
 
 import reactor.core.publisher.Mono;
 
@@ -41,6 +28,7 @@ public class AuthenticationDuplicateFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		this.redisTemplate.opsForValue();
 		/*StringBuilder sb = new StringBuilder(RedisKey.GATEWAY_DUPLICATE_STR_KEY);
 		ServerHttpRequest request = exchange.getRequest();
 		String first = request.getHeaders().getFirst(Sys.TOKEN);

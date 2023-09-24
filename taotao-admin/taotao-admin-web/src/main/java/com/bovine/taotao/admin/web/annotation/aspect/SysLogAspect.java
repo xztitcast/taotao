@@ -3,7 +3,6 @@ package com.bovine.taotao.admin.web.annotation.aspect;
 import com.alibaba.fastjson2.JSON;
 import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysLog;
-import com.bovine.taotao.admin.web.entity.SysUser;
 import com.bovine.taotao.admin.web.service.SysLogService;
 import com.bovine.taotao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
 import com.bovine.taotao.common.core.utils.IPUtil;

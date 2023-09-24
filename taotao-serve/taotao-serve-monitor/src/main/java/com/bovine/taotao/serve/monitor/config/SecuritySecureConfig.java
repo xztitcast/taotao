@@ -1,6 +1,7 @@
 package com.bovine.taotao.serve.monitor.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,7 @@ import de.codecentric.boot.admin.server.config.AdminServerProperties;
  * @author eden
  * @date 2022年10月23 22:17:44
  */
+@Configuration
 @EnableWebSecurity
 public class SecuritySecureConfig {
 	
@@ -31,7 +33,7 @@ public class SecuritySecureConfig {
 
 	@Bean
 	@Primary
-	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
