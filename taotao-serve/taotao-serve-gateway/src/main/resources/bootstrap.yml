@@ -4,7 +4,7 @@ server:
   
 spring:
   application:
-    name: smart-serve-gateway
+    name: taotao-serve-gateway
   lifecycle:
     timeout-per-shutdown-phase: 30S
   profiles:
