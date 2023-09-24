@@ -27,7 +27,7 @@ import com.bovine.taotao.common.mybatis.handler.MybatisPlusMetaObjectHandler;
 public class MybatisAutoConfiguration {
 
 	@Bean
-	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+	MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL));
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
@@ -36,7 +36,7 @@ public class MybatisAutoConfiguration {
 	}
 	
 	@Bean
-	public MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler() {
+	MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler() {
 		return new MybatisPlusMetaObjectHandler();
 	}
 }
