@@ -1,8 +1,6 @@
 package com.bovine.taotao.framework.i.service;
 
-import com.bovine.taotao.common.core.Principal;
 import com.bovine.taotao.common.core.injecter.FrameworkService;
-import com.bovine.taotao.framework.entity.Activity;
 import com.bovine.taotao.framework.entity.ActivityContext;
 import com.bovine.taotao.framework.i.service.extend.ActivityCompositeRequest;
 import com.bovine.taotao.framework.i.service.extend.ActivityCompositeResponse;
@@ -14,7 +12,7 @@ import java.util.Date;
  * @author eden
  * @date 2023/9/23 21:42:42
  */
-public interface ActivityContextService extends FrameworkService<ActivityContext, Long> {
+public interface ActivityContextService extends AbstractActivityService, FrameworkService<ActivityContext, Long> {
 
     /**
      * 活动预热
@@ -23,14 +21,6 @@ public interface ActivityContextService extends FrameworkService<ActivityContext
      * @return
      */
     boolean wramup(Long activityId, Date activityEndTime);
-
-    /**
-     * 去参加活动
-     * @param activity 参加的活动
-     * @param principal 参加活动主体
-     * @return ActivityCompositeResponse
-     */
-    ActivityCompositeResponse doJoin(Activity activity, Principal principal);
 
     /**
      * 委托计算

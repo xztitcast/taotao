@@ -15,7 +15,8 @@ public class IntegerIdKeyDeserializer extends IdKeyDeserializer<Integer>{
 
 	@Override
 	public Integer deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-		return super.deserialize(p, ctxt);
+		String value = super.deserialize(p.getText());
+		return Integer.valueOf(value);
 	}
 
 }

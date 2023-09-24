@@ -91,9 +91,13 @@ public enum S {
 
 	REQUEST_PARAMETER_ERROR(10002, "请求参数异常"),
 
-	MACHINE_NAME_ERROR(10005,"售卖机名称重复，请重新输入！"),
+	MACHINE_NAME_ERROR(10005,"售卖机名称重复，请重新输入!"),
 
-	MACHINE_CATEGORY_NAME_ERROR(10006, "售卖机分类名称重复，请重新输入！");
+	MACHINE_CATEGORY_NAME_ERROR(10006, "售卖机分类名称重复，请重新输入!"),
+
+	ACTIVITY_NOTFOUND_ERROR(20000, "活动不存在或已结束!"),
+
+	ACTIVITY_NOT_STARTED_ERROR(20001, "活动未开始或已结束!");
 
 	private int value;
 

@@ -8,7 +8,7 @@ import com.bovine.taotao.framework.entity.Activity;
  * @author eden
  * @date 2023/9/23 16:42:42
  */
-public interface ActivityService extends FrameworkService<Activity, Long> {
+public interface ActivityService extends AbstractActivityService, FrameworkService<Activity, Long> {
 
     /**
      * Spring bean 名称

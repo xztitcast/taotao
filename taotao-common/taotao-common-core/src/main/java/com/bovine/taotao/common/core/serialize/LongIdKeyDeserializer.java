@@ -15,7 +15,8 @@ public class LongIdKeyDeserializer extends IdKeyDeserializer<Long> {
 
 	@Override
 	public Long deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-		return super.deserialize(p, ctxt);
+		String value = super.deserialize(p.getText());
+		return Long.valueOf(value);
 	}
 	
 }

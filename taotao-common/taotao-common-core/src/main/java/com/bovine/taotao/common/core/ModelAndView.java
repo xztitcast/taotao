@@ -1,8 +1,6 @@
 package com.bovine.taotao.common.core;
 
-import com.bovine.taotao.common.core.serialize.IdKeyDeserializer;
 import com.bovine.taotao.common.core.serialize.IdKeySerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.Getter;
@@ -19,6 +17,5 @@ import lombok.Setter;
 public class ModelAndView<T> {
 
 	@JsonSerialize(using = IdKeySerializer.class)
-	@JsonDeserialize(using = IdKeyDeserializer.class)
 	protected T id;
 }

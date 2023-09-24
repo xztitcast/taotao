@@ -22,6 +22,7 @@ import com.bovine.taotao.framework.service.extend.ActivityRedisMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.connection.Message;
@@ -33,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static com.bovine.taotao.common.core.Constant.DELIMITER_COLON;
 
@@ -44,7 +46,7 @@ import static com.bovine.taotao.common.core.Constant.DELIMITER_COLON;
 @Slf4j
 @Service("activityContextService")
 @DubboService(interfaceClass = ActivityContextService.class)
-public class ActivityContextServiceImpl extends ServiceImpl<ActivityContextMapper, ActivityContext> implements IService<ActivityContext>, ActivityContextService, ActivityRedisMessageListener {
+public class ActivityContextServiceImpl extends ServiceImpl<ActivityContextMapper, ActivityContext> implements IService<ActivityContext>, ActivityContextService, ActivityRedisMessageListener, InitializingBean {
 
     private static final String ACTIVITY_KEY = "JC:CORE:ACTIVITY:";
 
@@ -223,5 +225,11 @@ public class ActivityContextServiceImpl extends ServiceImpl<ActivityContextMappe
         onMessage(body);
 
         log.info("活动解析内容成功");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Set<String> keys = this.redisTemplate.keys(ACTIVITY_KEY);
+        keys.forEach(this::onMessage);
     }
 }
