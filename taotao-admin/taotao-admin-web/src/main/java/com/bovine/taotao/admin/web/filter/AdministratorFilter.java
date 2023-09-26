@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public class AdministratorFilter extends OncePerRequestFilter {
 
-    private static final Set<String> SYSTEM_URL = Set.of("/sys/login", "/sys/logout", "/sys/user/**", "/sys/menu/**", "/sys/role/**", "/sys/log/**", "/sys/dict/**", "/sys/tissue/**", "/dynamic/captcha/**");
+    private static final Set<String> SYSTEM_URL = Set.of("/sys/login", "/sys/logout", "/sys/user/**", "/sys/menu/**", "/sys/role/**", "/sys/log/**", "/sys/dict/**", "/sys/tissue/**", "/sys/dynamic/**");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

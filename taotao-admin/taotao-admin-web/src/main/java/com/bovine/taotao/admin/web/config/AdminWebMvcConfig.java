@@ -62,7 +62,7 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.formLogin(login -> login.loginProcessingUrl("/sys/login").authenticationDetailsSource(this.multipleWebAuthenticationDetailsSource).successHandler(this.refreshAuthenticationSuccessHandler).failureHandler(this.lockedAuthenticationFailureHandler))
 				.authorizeHttpRequests(request -> request.requestMatchers("/sys/captcha.jpg").permitAll().requestMatchers("/test/**").permitAll())
-				.authorizeHttpRequests(request -> request.requestMatchers("/dynamic/captcha/**").permitAll())
+				.authorizeHttpRequests(request -> request.requestMatchers("/sys/dynamic/**").permitAll())
 				.authorizeHttpRequests(request -> request.anyRequest().authenticated())
 				.authenticationProvider(this.daoAuthenticationProvider)
 				.addFilterBefore(this.authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
