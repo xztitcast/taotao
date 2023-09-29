@@ -1,14 +1,15 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 文章实体类
@@ -19,9 +20,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_article")
-public class Article extends CreateEntity<Long> implements Serializable {
+public class Article extends CreateEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Long id;
 
 	/**
 	 * 作者

@@ -1,20 +1,25 @@
 package com.bovine.taotao.admin.web.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
 @TableName(value = "tb_sys_user")
-public class SysUser extends BaseEntity<Long> implements Serializable {
+public class SysUser extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Long id;
 
     private String username;
 

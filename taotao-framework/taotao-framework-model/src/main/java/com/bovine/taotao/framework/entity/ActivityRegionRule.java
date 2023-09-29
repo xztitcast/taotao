@@ -1,5 +1,7 @@
 package com.bovine.taotao.framework.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 import lombok.Getter;
@@ -17,9 +19,12 @@ import java.util.List;
 @Getter
 @Setter
 @TableName(value = "tb_activity_region_rule")
-public class ActivityRegionRule extends CreateEntity<Long> implements Serializable {
+public class ActivityRegionRule extends CreateEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.INPUT)
+    private Long id;
 
     /**
      * 区域列表

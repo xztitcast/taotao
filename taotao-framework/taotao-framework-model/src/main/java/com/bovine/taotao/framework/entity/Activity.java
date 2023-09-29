@@ -1,6 +1,8 @@
 package com.bovine.taotao.framework.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 import com.bovine.taotao.common.mybatis.handler.MybatisPlusList2JsonHandler;
@@ -19,9 +21,12 @@ import java.util.List;
 @Getter
 @Setter
 @TableName(value = "tb_activity")
-public class Activity extends CreateEntity<Long> implements Serializable {
+public class Activity extends CreateEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
      * 活动名称

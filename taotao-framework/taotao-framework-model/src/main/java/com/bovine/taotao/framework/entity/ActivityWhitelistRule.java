@@ -1,5 +1,7 @@
 package com.bovine.taotao.framework.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
 import lombok.Getter;
@@ -17,9 +19,12 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName(value = "tb_activity_whitelist_rule")
-public class ActivityWhitelistRule extends CreateEntity<Long> implements Serializable {
+public class ActivityWhitelistRule extends CreateEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
      * 关联活动ID

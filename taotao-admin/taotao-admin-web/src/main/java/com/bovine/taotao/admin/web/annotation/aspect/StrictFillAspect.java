@@ -69,7 +69,7 @@ public class StrictFillAspect {
 	 * @param sysUser
 	 */
 	private void setTissueEntityEnhance(Object arg, SysUser sysUser) {
-		TissueEntity<?> te = (TissueEntity<?>)arg;
+		TissueEntity te = (TissueEntity)arg;
 		te.setTisid(sysUser.getTisid());
 		te.setTisname(sysUser.getTisname());
 	}
@@ -80,7 +80,7 @@ public class StrictFillAspect {
 	 * @param sysUser
 	 */
 	private void setCreateEntityEnhance(Object arg, SysUser sysUser) {
-		CreateEntity<?> ce = (CreateEntity<?>)arg;
+		CreateEntity ce = (CreateEntity)arg;
 		ce.setCreator(sysUser.getId());
 		ce.setCreateName(sysUser.getUsername());
 		setUpdateEntityEnhance(arg, sysUser);
@@ -92,7 +92,7 @@ public class StrictFillAspect {
 	 * @param sysUser
 	 */
 	private void setUpdateEntityEnhance(Object arg, SysUser sysUser) {
-		CreateEntity<?> ce = (CreateEntity<?>)arg;
+		CreateEntity ce = (CreateEntity)arg;
 		ce.setUpdateName(sysUser.getUsername());
 		ce.setUpdater(sysUser.getId());
 	}

@@ -1,13 +1,14 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-import java.sql.Time;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.sql.Time;
 
 /**
  * 协议实体类
@@ -17,9 +18,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_agreement")
-public class Agreement extends CreateEntity<Integer> implements Serializable {
+public class Agreement extends CreateEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Integer id;
 	
 	/**
 	 * 客服电话

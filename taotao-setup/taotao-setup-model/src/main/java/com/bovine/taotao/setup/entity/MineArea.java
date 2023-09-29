@@ -1,12 +1,13 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * "我的"页面区域实体类
@@ -16,9 +17,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_mine_area")
-public class MineArea extends CreateEntity<Long> implements Serializable {
+public class MineArea extends CreateEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Long id;
 	
 	/**
 	 * 关联我的页面ID
