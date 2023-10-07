@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.25.101:5432/taotao_framework
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
+      minimum-idle: 1
+      maximum-pool-size: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      validation-timeout: 5000
+      connection-timeout: 30000
+      leak-detection-threshold: 5000
+      connection-test-query: SELECT 1
+  data:
+    redis:
+      database: 0
+      host: 192.168.25.102
+      port: 6379
+      lettuce:
+        pool:
+          enabled: true
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms

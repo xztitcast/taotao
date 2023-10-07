@@ -1,12 +1,13 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.BaseEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * 广告与内容关联实体类
@@ -16,9 +17,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_ad_join_content")
-public class AdJoinContent extends BaseEntity<Long> implements Serializable {
+public class AdJoinContent extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Long id;
 
 	/**
 	 * 广告ID

@@ -1,14 +1,11 @@
 package com.bovine.taotao.common.mybatis.entity;
 
-import java.io.Serializable;
-
 /**
  * 创建者实体类
  * @author eden
  * @date 2023年2月19日 下午4:17:49
- * @param <T>
  */
-public abstract class CreateEntity<T extends Serializable> extends TissueEntity<T> {
+public abstract class CreateEntity extends TissueEntity {
 
 	/**
 	 * 创建者(ID)

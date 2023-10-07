@@ -1,10 +1,8 @@
 package com.bovine.taotao.common.mybatis.entity;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public abstract class TissueEntity<T extends Serializable> extends BaseEntity<T> {
+public abstract class TissueEntity extends BaseEntity {
 	
 	/**
 	 * 机构ID

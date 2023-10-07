@@ -1,16 +1,13 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
+import com.bovine.taotao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * 文章内容管理
@@ -20,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName(value = "tb_article_content")
-public class ArticleContent implements Serializable {
+public class ArticleContent extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,15 +25,6 @@ public class ArticleContent implements Serializable {
 	private Long id;
 	
 	private String content;
-	
-	@TableField(fill = FieldFill.INSERT)
-	protected Date created;
-	
-	/**
-	 * 更新时间
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	protected Date updated;
 
 	public ArticleContent() {
 		

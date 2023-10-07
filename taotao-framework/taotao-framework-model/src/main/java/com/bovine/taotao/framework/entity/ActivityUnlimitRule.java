@@ -1,5 +1,7 @@
 package com.bovine.taotao.framework.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.core.Constant;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
@@ -17,9 +19,12 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName(value = "tb_activity_unlimit_rule")
-public class ActivityUnlimitRule extends CreateEntity<Long> implements Serializable {
+public class ActivityUnlimitRule extends CreateEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.INPUT)
+    private Long id;
 
     /**
      * 总次数

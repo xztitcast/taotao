@@ -1,12 +1,13 @@
 package com.bovine.taotao.setup.entity;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bovine.taotao.common.mybatis.entity.CreateEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * 小程序导航全局配置实体类
@@ -16,9 +17,12 @@ import lombok.Setter;
 @Setter
 @Getter
 @TableName(value = "tb_layout")
-public class Layout extends CreateEntity<Integer> implements Serializable {
+public class Layout extends CreateEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     /**
      * tab 上的文字默认颜色,仅支持十六进制颜色

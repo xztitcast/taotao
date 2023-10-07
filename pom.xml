@@ -90,17 +90,6 @@
 	        </exclusions>
 		</dependency>
 		<dependency>
-		  	<groupId>org.apache.dubbo</groupId>
-		  	<artifactId>dubbo-serialization-kryo</artifactId>
-		  	<version>${kryo.version}</version>
-		  	<exclusions>
-	            <exclusion>
-	                <groupId>org.apache.dubbo</groupId>
-	                <artifactId>dubbo-common</artifactId>
-	            </exclusion>
-	        </exclusions>
-		</dependency>
-		<dependency>
 	    	<groupId>org.apache.dubbo</groupId>
 	  		<artifactId>dubbo-rpc-api</artifactId>
 	  		<version>${dubbo.version}</version>
@@ -155,11 +144,6 @@
 	         <artifactId>aliyun-java-sdk-core</artifactId>
 	         <version>${aliyun-java-sdk-core.version}</version>
 	    </dependency>
-	    <dependency>
-			<groupId>com.qcloud</groupId>
-			<artifactId>cos_api</artifactId>
-			<version>${cos_api.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>com.qiniu</groupId>
 			<artifactId>qiniu-java-sdk</artifactId>
@@ -317,7 +301,7 @@
 		    <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.11.0</version>
 		        <configuration>
                 	<source>${java.version}</source>
                 	<target>${java.version}</target>
