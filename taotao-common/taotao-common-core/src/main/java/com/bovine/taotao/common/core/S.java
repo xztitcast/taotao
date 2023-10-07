@@ -11,9 +11,9 @@ public enum S {
 
 	ERROR(-1, "系统异常稍后重试!"),
 
-	RESTRICT_ACCESS(600, "限制访问,只允许访问系统管理"),
+	UNAUTHORIZED(401, "请科学上网,正常登录!"),
 
-	UNAUTHORIZED(601, "请科学上网,正常登录!"),
+	RESTRICT_ACCESS(600, "限制访问,只允许访问系统管理"),
 
 	REPEATSUBMIT(602, "系统正在努力处理中...请耐心等待!"),
 
