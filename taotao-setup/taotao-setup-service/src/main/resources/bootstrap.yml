@@ -20,18 +20,12 @@ spring:
     time-zone: GMT+8
   cloud:
     nacos:
-      discovery:
-        enabled: false
-        username: '@nacos.username@'
-        password: '@nacos.password@'
-        server-addr: '@dubbo.server-addr@'
-        namespace: '@dubbo.namespace@'
       config:
         enabled: true
         username: '@nacos.username@'
         password: '@nacos.password@'
         server-addr: '@dubbo.server-addr@'
-        namespace: '@config.namespace@'
+        namespace: '@dubbo.namespace@'
         file-extension: yml
         refresh-enabled: true
         extension-configs:
@@ -55,24 +49,30 @@ dubbo:
     threadpool: fixed
   registry:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: ${spring.cloud.nacos.config.namespace}
   metadata-report:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: ${spring.cloud.nacos.config.namespace}
   provider:
     filter: exceptionCustomizerFilter,-exception
     loadbalance: roundrobin
     serialization: fastjson2 #fastjson2为了安全默认关闭了autoType功能，该功能如没有无参构造时就会报auotype not support，比如:org.springframework.jdbc.BadSqlGrammarException
     retries: 0
     timeout: 6000
+  consumer:
+    loadbalance: roundrobin
+    #validation: true 由于升级Spring boot3.0 javaEE包名已修改jakarta，如果开启dubbo参数验证会报错所以暂时关闭程序入参用Spring框架验证
+    validation: false
+    timeout: 30000
+    check: false
 
 management:
   endpoints:

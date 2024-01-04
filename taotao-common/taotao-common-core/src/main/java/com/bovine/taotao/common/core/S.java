@@ -11,7 +11,7 @@ public enum S {
 
 	ERROR(-1, "系统异常稍后重试!"),
 
-	UNAUTHORIZED(401, "请科学上网,正常登录!"),
+	UNAUTHORIZED(401, "登录失效,请重新登录!"),
 
 	RESTRICT_ACCESS(600, "限制访问,只允许访问系统管理"),
 

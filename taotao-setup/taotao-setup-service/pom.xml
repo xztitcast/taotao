@@ -14,6 +14,11 @@
    		<artifactId>taotao-common-redis</artifactId>
    		<version>${project.version}</version>
 	</dependency>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>taotao-common-security</artifactId>
+        <version>${project.version}</version>
+    </dependency>
 	<dependency>
 		<groupId>${project.groupId}</groupId>
    		<artifactId>taotao-setup-dao</artifactId>
@@ -32,11 +37,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-	<dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-    </dependency>
-     	<dependency>
+    <dependency>
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     </dependency>

@@ -19,18 +19,12 @@ spring:
     time-zone: GMT+8
   cloud:
     nacos:
-      discovery:
-        enabled: false
-        username: '@nacos.username@'
-        password: '@nacos.password@'
-        server-addr: '@dubbo.server-addr@'
-        namespace: '@dubbo.namespace@'
       config:
         enabled: true
         username: '@nacos.username@'
         password: '@nacos.password@'
         server-addr: '@dubbo.server-addr@'
-        namespace: '@config.namespace@'
+        namespace: '@dubbo.namespace@'
         file-extension: yml
         refresh-enabled: true
         extension-configs:
@@ -57,24 +51,29 @@ dubbo:
     threadpool: fixed
   registry:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: ${spring.cloud.nacos.config.namespace}
   metadata-report:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: ${spring.cloud.nacos.config.namespace}
   provider:
     filter: exceptionCustomizerFilter,-exception
     loadbalance: roundrobin
     serialization: fastjson2
     retries: 0
     timeout: 6000
+  consumer:
+    loadbalance: roundrobin
+    validation: false
+    timeout: 30000
+    check: false
     
 management:
   endpoints:

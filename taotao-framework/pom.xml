@@ -14,6 +14,5 @@
   	<module>taotao-framework-model</module>
   	<module>taotao-framework-interface</module>
   	<module>taotao-framework-service</module>
-  	<module>taotao-framework-web</module>
   </modules>
 </project>
