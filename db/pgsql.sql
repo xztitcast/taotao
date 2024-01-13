@@ -16,6 +16,7 @@ CREATE TABLE tb_sys_menu (
      url varchar(100),
      perms varchar(255),
      type smallint,
+     status int2 NOT NULL DEFAULT 0,
      icon varchar(50),
      sorted smallint DEFAULT 0,
      PRIMARY KEY (id)
@@ -28,6 +29,7 @@ COMMENT ON COLUMN tb_sys_menu.name IS '名称';
 COMMENT ON COLUMN tb_sys_menu.url IS '菜单URL';
 COMMENT ON COLUMN tb_sys_menu.perms IS '授权(多个用逗号分隔，如：sys:user:list,sys:user:save)';
 COMMENT ON COLUMN tb_sys_menu.type IS '类型 0：菜单 1：按钮';
+COMMENT ON COLUMN tb_sys_menu.status IS '状态 是否能被删除 0：否 1：是';
 COMMENT ON COLUMN tb_sys_menu.icon IS '菜单图标';
 COMMENT ON COLUMN tb_sys_menu.sorted IS '排序';
 
@@ -147,34 +149,34 @@ COMMENT ON COLUMN tb_sys_dict.updated IS '更新时间';
 
 INSERT INTO tb_sys_user (id, username, password, salt, status, avatar, created, updated, creator) VALUES ('1', 'admin', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', 'YzcmCZNvbXocrsz9dm8e', '0', NULL, NOW(), NOW(), '0');
 
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (1, 0, '系统管理', NULL, NULL, 0, 'system', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (2, 1, '管理员列表', 'sys/user', NULL, 1, 'admin', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (3, 1, '角色管理', 'sys/role', NULL, 1, 'role', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (4, 1, '菜单管理', 'sys/menu', NULL, 1, 'menu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (5, 1, '数据字典', 'sys/dict', NULL, 1, 'icon-folder-open', 4);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (6, 1, '机构管理', 'sys/tissue', NULL, 1, 'icon-cloud', 5);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (7, 1, '日志管理', 'sys/log', NULL, 1, 'log', 6);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (8, 2, '查看', NULL, 'sys:user:list,sys:user:info,sys:role:select', 2, 'sousuo', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (9, 2, '新增', NULL, 'sys:user:save', 2, 'add', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (10, 2, '修改', NULL, 'sys:user:update', 2, 'bianji', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (11, 2, '删除', NULL, 'sys:user:delete', 2, 'shanchu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (12, 3, '查看', NULL, 'sys:role:list,sys:role:info', 2, 'sousuo', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (13, 3, '新增', NULL, 'sys:role:save', 2, 'add', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (14, 3, '修改', NULL, 'sys:role:update', 2, 'bianji', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (15, 3, '删除', NULL, 'sys:role:delete', 2, 'shanchu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (16, 4, '查看', NULL, 'sys:menu:list,sys:menu:info,sys:menu:select', 2, 'sousuo', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (17, 4, '新增', NULL, 'sys:menu:save', 2, 'add', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (18, 4, '修改', NULL, 'sys:menu:update', 2, 'bianji', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (19, 4, '删除', NULL, 'sys:menu:delete', 2, 'shanchu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (20, 5, '查看', NULL, 'sys:dict:list,sys:dict:info', 2, 'sousuo', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (21, 5, '新增', NULL, 'sys:dict:save', 2, 'add', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (22, 5, '修改', NULL, 'sys:dict:update', 2, 'bianji', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (23, 5, '删除', NULL, 'sys:dict:delete', 2, 'shanchu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (24, 6, '查看', NULL, 'sys:tissue:list,sys:tissue:info,sys:tissue:wx:config:info', 2, 'sousuo', 0);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (25, 6, '新增', NULL, 'sys:tissue:save,sys:tissue:wx:config:save', 2, 'add', 1);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (26, 6, '修改', NULL, 'sys:tissue:update', 2, 'bianji', 2);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (27, 6, '删除', NULL, 'sys:tissue:delete', 2, 'shanchu', 3);
-INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, icon, sorted) VALUES (28, 7, '查看', NULL, 'sys:log:list', 2, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (1, 0, '系统管理', NULL, NULL, 0, 0, 'system', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (2, 1, '管理员列表', 'sys/user', NULL, 1, 0, 'admin', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (3, 1, '角色管理', 'sys/role', NULL, 1, 0, 'role', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (4, 1, '菜单管理', 'sys/menu', NULL, 1, 0, 'menu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (5, 1, '数据字典', 'sys/dict', NULL, 1, 0, 'icon-folder-open', 4);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (6, 1, '机构管理', 'sys/tissue', NULL, 1, 0, 'icon-cloud', 5);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (7, 1, '日志管理', 'sys/log', NULL, 1, 0, 'log', 6);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (8, 2, '查看', NULL, 'sys:user:list,sys:user:info,sys:role:select', 2, 0, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (9, 2, '新增', NULL, 'sys:user:save', 2, 0, 'add', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (10, 2, '修改', NULL, 'sys:user:update', 2, 0, 'bianji', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (11, 2, '删除', NULL, 'sys:user:delete', 2, 0, 'shanchu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (12, 3, '查看', NULL, 'sys:role:list,sys:role:info', 2, 0, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (13, 3, '新增', NULL, 'sys:role:save', 2, 0, 'add', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (14, 3, '修改', NULL, 'sys:role:update', 2, 0, 'bianji', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (15, 3, '删除', NULL, 'sys:role:delete', 2, 0, 'shanchu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (16, 4, '查看', NULL, 'sys:menu:list,sys:menu:info,sys:menu:select', 2, 0, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (17, 4, '新增', NULL, 'sys:menu:save', 2, 0, 'add', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (18, 4, '修改', NULL, 'sys:menu:update', 2, 0, 'bianji', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (19, 4, '删除', NULL, 'sys:menu:delete', 2, 0, 'shanchu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (20, 5, '查看', NULL, 'sys:dict:list,sys:dict:info', 2, 0, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (21, 5, '新增', NULL, 'sys:dict:save', 2, 0, 'add', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (22, 5, '修改', NULL, 'sys:dict:update', 2, 0, 'bianji', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (23, 5, '删除', NULL, 'sys:dict:delete', 2, 0, 'shanchu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (24, 6, '查看', NULL, 'sys:tissue:list,sys:tissue:info,sys:tissue:wx:config:info', 2, 0, 'sousuo', 0);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (25, 6, '新增', NULL, 'sys:tissue:save,sys:tissue:wx:config:save', 2, 0, 'add', 1);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (26, 6, '修改', NULL, 'sys:tissue:update', 2, 0, 'bianji', 2);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (27, 6, '删除', NULL, 'sys:tissue:delete', 2, 0, 'shanchu', 3);
+INSERT INTO tb_sys_menu (id, parent_id, name, url, perms, type, status, icon, sorted) VALUES (28, 7, '查看', NULL, 'sys:log:list', 2, 0, 'sousuo', 0);
 
 alter sequence tb_sys_menu_id_seq restart with 29;
 alter sequence tb_sys_user_id_seq restart with 2;

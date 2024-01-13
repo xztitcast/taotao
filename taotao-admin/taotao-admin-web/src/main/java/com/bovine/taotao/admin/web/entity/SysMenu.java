@@ -34,6 +34,8 @@ public class SysMenu implements Serializable {
 
     private Integer type;
 
+    private Integer status;
+
     private String icon;
 
     private Integer sorted;
