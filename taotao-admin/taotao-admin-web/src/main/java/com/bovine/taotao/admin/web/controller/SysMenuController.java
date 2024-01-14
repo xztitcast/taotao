@@ -40,8 +40,17 @@ public class SysMenuController extends BaseController {
 	@GetMapping("/nav")
 	public R nav() {
 		List<SysMenu> menuList = sysMenuService.getNavMenuTreeList(getUserId());
+		return R.ok(menuList);
+	}
+
+	/**
+	 * 获取权限列表
+	 * @return
+	 */
+	@GetMapping("/permissions")
+	public R permissions() {
 		Set<String> permissions = sysMenuService.getPermissions(getUserId());
-		return R.ok().put("menuList", menuList).put("permissions", permissions);
+		return R.ok(permissions);
 	}
 	
 	/**
@@ -112,7 +121,8 @@ public class SysMenuController extends BaseController {
 	@DeleteMapping("/delete/{menuId}")
 	@PreAuthorize(value = "hasAuthority('sys:menu:delete')")
 	public R delete(@PathVariable("menuId") long menuId){
-		if(menuId <= 28){
+		SysMenu entity = sysMenuService.getById(menuId);
+		if(entity.getStatus() == 0){
 			return R.error(S.MENU_BASEFRAME_REMOVE_ERROR);
 		}
 

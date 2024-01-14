@@ -118,10 +118,10 @@ public class SysModuleController {
 		}
 		int status = em.getStatus();
 		if(status < 0 && status > 2) {
-			return R.error(S.PARAMTER_INDEX_OUTOF_BOUNDS_ERROR);
+			return R.error(S.PARAMTER_BOUNDS_ERROR);
 		}
 		if(entity.getStatus() == status) {
-			return R.error(S.DATA_PARAMTER_ERROR);
+			return R.error(S.DATA_STATUS_ERROR);
 		}
 		em.setStatus(em.getStatus());
 		boolean update = moduleService.updateEntity(em);

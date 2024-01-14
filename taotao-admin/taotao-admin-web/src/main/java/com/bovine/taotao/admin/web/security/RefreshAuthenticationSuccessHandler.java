@@ -1,6 +1,7 @@
 package com.bovine.taotao.admin.web.security;
 
 import com.alibaba.fastjson2.JSON;
+import com.bovine.taotao.admin.web.modelAndView.view.LoginView;
 import com.bovine.taotao.common.core.Constant;
 import com.bovine.taotao.common.core.Constant.RedisKey;
 import com.bovine.taotao.common.core.R;
@@ -42,8 +43,9 @@ public class RefreshAuthenticationSuccessHandler implements AuthenticationSucces
             this.redisTemplate.opsForValue().set(RedisKey.SYS_SESSION_ID_STR_KEY.concat(token), JSON.toJSONString(authentication.getPrincipal()), 12, TimeUnit.HOURS);
         }
         this.redisTemplate.delete(RedisKey.SYS_LOGIN_LOCKED_KEY.concat(request.getParameter("username")));
+        LoginView view = new LoginView(token, open);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        response.getWriter().print(R.ok(token).put(Constant.Sys.FACTOR_NAME, open));
+        response.getWriter().print(R.ok(view));
     }
 }

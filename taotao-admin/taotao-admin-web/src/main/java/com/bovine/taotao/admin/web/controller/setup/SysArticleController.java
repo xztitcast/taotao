@@ -117,10 +117,10 @@ public class SysArticleController {
 		}
 		int top = entity.getTop();
 		if(top < 0 && top > 2) {
-			return R.error(S.PARAMTER_INDEX_OUTOF_BOUNDS_ERROR);
+			return R.error(S.PARAMTER_BOUNDS_ERROR);
 		}
 		if(article.getTop() == top) {
-			return R.error(S.DATA_TOP_ERROR);
+			return R.error(S.DATA_STATUS_ERROR);
 		}
 		entity.setTop(top);
 		boolean update = articleService.updateEntity(entity);
@@ -146,10 +146,10 @@ public class SysArticleController {
 		}
 		int hot = entity.getHot();
 		if(hot < 0 && hot > 2) {
-			return R.error(S.PARAMTER_INDEX_OUTOF_BOUNDS_ERROR);
+			return R.error(S.PARAMTER_BOUNDS_ERROR);
 		}
 		if(article.getHot() == hot) {
-			return R.error(S.DATA_PARAMTER_ERROR);
+			return R.error(S.DATA_STATUS_ERROR);
 		}
 		entity.setHot(hot);
 		boolean update = articleService.updateEntity(entity);
@@ -175,10 +175,10 @@ public class SysArticleController {
 		}
 		int status = entity.getStatus();
 		if(status < 1 && status > 4) {
-			return R.error(S.PARAMTER_INDEX_OUTOF_BOUNDS_ERROR);
+			return R.error(S.PARAMTER_BOUNDS_ERROR);
 		}
 		if(article.getStatus() == status) {
-			return R.error(S.DATA_PARAMTER_ERROR);
+			return R.error(S.DATA_STATUS_ERROR);
 		}
 		if(status == 2) {
 			entity.setPushTime(new Date());

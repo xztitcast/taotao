@@ -19,17 +19,13 @@ public enum S {
 
 	SENTINEL_LIMIT(603, "系统正在努力排队中...请稍后重试!"),
 
-	SYSTEM_UNAUTHORIZED(604, "请科学上网正常访问...否则封禁哦!"),
+	SYSTEM_UNAUTHORIZED(604, "无权限访问,请联系管理员!"),
 
-	PARAMTER_INDEX_OUTOF_BOUNDS_ERROR(605, "传递后端参数下标越界"),
+	PARAMTER_BOUNDS_ERROR(605, "参数异常,请联系技术人员!"),
 
-	DATA_NOTFOUND_ERROR(606, "数据不存在!"),
+	DATA_NOTFOUND_ERROR(606, "数据结果集不存在!"),
 
-	DATA_PARAMTER_ERROR(607, "数据传递后端参数异常"),
-
-	DATA_HOT_ERROR(608, "该数据已经是热门数据"),
-
-	DATA_TOP_ERROR(609, "该数据已经置顶"),
+	DATA_STATUS_ERROR(607, "当前状态已存在,无需重新设置!"),
 
 	TOKEN_EXPIRE(1000, "验证码已失效!"),
 
@@ -57,7 +53,7 @@ public enum S {
 
 	USER_ADDROLE_NOTPERMISSIONS_ERROR(1012, "新增角色的权限，已超出你的权限范围!"),
 
-	MENU_BASEFRAME_REMOVE_ERROR(2000, "基础框架菜单不能删除!"),
+	MENU_BASEFRAME_REMOVE_ERROR(2000, "主结构菜单不能被删除!"),
 
 	MENU_CORRESPONDING_REMOVE_ERROR(2001, "请删除对应的菜单或者按钮后再删除主菜单!"),
 
@@ -70,30 +66,6 @@ public enum S {
 	MENU_PARENT_NOTFOUND_ERROR(2005, "父级菜单不能为空!"),
 
 	MENU_URL_NOTFOUND_ERROR(2006, "菜单URL不能为空!"),
-
-	ESTATE_AUTH_ERROR(3000, "你不是该物业人员"),
-
-	ESTATE_AUTH_REPEAT_ERROR(3001, "你已认证成功,请勿重复认证!"),
-
-	ESTATE_CODE_INVALID_ERROR(3002, "无效的二维码!"),
-
-	ESTATE_CODE_VALIDATED_ERROR(3003, "该二维码已核销过了"),
-
-	ESTATE_CODE_VALID_ERROR(3004, "核销失败,稍后重试!"),
-
-	REGION_NOTFOUND_ERROR(4000, "行政地区不存在"),
-
-	NOTICE_VALID_LIMIT(5000,"只可同时存在5条有效数据"),
-
-	core_INACTIVE_ERROR(10000, "商户已被禁用,请联系相关人员!"),
-
-	REQUEST_DECRYPT_ERROR(10001, "请求解密异常"),
-
-	REQUEST_PARAMETER_ERROR(10002, "请求参数异常"),
-
-	MACHINE_NAME_ERROR(10005,"售卖机名称重复，请重新输入!"),
-
-	MACHINE_CATEGORY_NAME_ERROR(10006, "售卖机分类名称重复，请重新输入!"),
 
 	ACTIVITY_NOTFOUND_ERROR(20000, "活动不存在或已结束!"),
 
