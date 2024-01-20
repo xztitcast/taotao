@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -133,10 +134,11 @@ public class CaptchaAutoConfiguration {
          * @return
          */
         @PostMapping("/get")
-        public ResponseModel get(@RequestBody CaptchaVO data, HttpServletRequest request) {
+        public CaptchaModel get(@RequestBody CaptchaVO data, HttpServletRequest request) {
             assert request.getRemoteHost() != null;
             data.setBrowserInfo(getRemoteId(request));
-            return captchaService.get(data);
+            ResponseModel model = captchaService.get(data);
+            return new CaptchaModel(Integer.valueOf(model.getRepCode()), model.getRepMsg(), model.getRepData());
         }
 
         /**
@@ -146,9 +148,10 @@ public class CaptchaAutoConfiguration {
          * @return
          */
         @PostMapping("/check")
-        public ResponseModel check(@RequestBody CaptchaVO data, HttpServletRequest request) {
+        public CaptchaModel check(@RequestBody CaptchaVO data, HttpServletRequest request) {
             data.setBrowserInfo(getRemoteId(request));
-            return captchaService.check(data);
+            ResponseModel model = captchaService.check(data);
+            return new CaptchaModel(Integer.valueOf(model.getRepCode()), model.getRepMsg(), model.getRepData());
         }
 
         private String getRemoteId(HttpServletRequest request) {
@@ -167,6 +170,52 @@ public class CaptchaAutoConfiguration {
                 return StringUtils.trim(ipList[0]);
             }
             return null;
+        }
+    }
+
+    /**
+     * 人机验证响应实体类(与后台管理系统一致)
+     */
+    private static class CaptchaModel implements Serializable {
+
+        private int code;
+
+        private String message;
+
+        private Object result;
+
+        public CaptchaModel() {
+
+        }
+
+        public CaptchaModel(int code, String message, Object result) {
+            this.code = code;
+            this.message = message;
+            this.result = result;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public Object getResult() {
+            return result;
+        }
+
+        public void setResult(Object result) {
+            this.result = result;
         }
     }
 }
