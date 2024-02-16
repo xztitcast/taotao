@@ -2,7 +2,6 @@ package com.bovine.taotao.admin.web.security;
 
 import com.alibaba.fastjson2.JSON;
 import com.bovine.taotao.admin.web.modelAndView.view.LoginView;
-import com.bovine.taotao.common.core.Constant;
 import com.bovine.taotao.common.core.Constant.RedisKey;
 import com.bovine.taotao.common.core.R;
 import jakarta.servlet.ServletException;
@@ -14,10 +13,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -40,10 +41,11 @@ public class RefreshAuthenticationSuccessHandler implements AuthenticationSucces
         if(open) {
             this.redisTemplate.opsForValue().set(RedisKey.SYS_SMS_ID_KEY.concat(token), JSON.toJSONString(authentication.getPrincipal()), 5, TimeUnit.MINUTES);
         }else {
-            this.redisTemplate.opsForValue().set(RedisKey.SYS_SESSION_ID_STR_KEY.concat(token), JSON.toJSONString(authentication.getPrincipal()), 12, TimeUnit.HOURS);
+            this.redisTemplate.opsForValue().set(RedisKey.SYS_SESSION_ID_KEY.concat(token), JSON.toJSONString(authentication.getPrincipal()), 12, TimeUnit.HOURS);
         }
-        this.redisTemplate.delete(RedisKey.SYS_LOGIN_LOCKED_KEY.concat(request.getParameter("username")));
-        LoginView view = new LoginView(token, open);
+        this.redisTemplate.delete(RedisKey.SYS_LOGIN_LOCKED_KEY.concat(request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)));
+        Long expire = this.redisTemplate.getExpire(RedisKey.SYS_SESSION_ID_KEY.concat(token));
+        LoginView view = new LoginView(token, expire, open);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         response.getWriter().print(R.ok(view));

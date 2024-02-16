@@ -1,15 +1,11 @@
 package com.bovine.taotao.admin.web.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
-
+import com.bovine.taotao.admin.web.event.SysLoginEvent;
 import com.bovine.taotao.admin.web.modelAndView.model.SmsModel;
 import com.bovine.taotao.common.core.Constant.RedisKey;
+import com.bovine.taotao.common.core.R;
 import com.bovine.taotao.common.core.S;
+import com.google.code.kaptcha.Producer;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,9 +19,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.bovine.taotao.admin.web.event.SysLoginEvent;
-import com.bovine.taotao.common.core.R;
-import com.google.code.kaptcha.Producer;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 管理系统登陆验证码控制器
@@ -92,47 +90,6 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	}
 
 	/**
-	 * 登陆
-	 * @param lm
-	 * @return
-	 */
-    /*@PostMapping("/login")
-	public R login(@RequestBody @Validated LoginModel lm) {
-		this.applicationEventPublisher.publishEvent(new SysLoginEvent(lm));
-		String captcha = redisTemplate.opsForValue().get(lm.getUuid());
-		if(captcha == null || captcha.isBlank()) {
-			return R.error(S.CODE_EXPIRE);
-		}
-		if(!captcha.equalsIgnoreCase(lm.getCaptcha())) {
-			return R.error(S.CODE_ERROR);
-		}
-		SysUser user = sysUserService.getByUserName(lm.getUsername());
-		if(user == null || !user.getPassword().equals(new Sha256Hash(lm.getPassword(), user.getSalt()).toHex())) {
-			return R.error(S.USER_PWD_ERROR);
-		}
-
-		if(user.getStatus() == 1) {
-			return R.error(S.USER_INACTIVE_ERROR);
-		}
-		String token = shiroService.createToken(user);
-		return R.ok(token);
-	}*/
-
-	/**
-	 * 退出登陆
-	 * @param request
-	 * @return
-	 */
-    /*@PostMapping("/logout")
-	public R logout(HttpServletRequest request) {
-		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername()));
-		String token = request.getHeader("token");
-		shiroService.remove(token);
-		SecurityUtils.getSubject().logout();
-		return R.ok();
-	}*/
-
-	/**
 	 * 退出登录
 	 * @param request
 	 * @return
@@ -141,7 +98,7 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	public R logout(HttpServletRequest request) {
 		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername()));
 		String token = request.getHeader("token");
-		redisTemplate.delete(RedisKey.SYS_SESSION_ID_STR_KEY.concat(token));
+		redisTemplate.delete(RedisKey.SYS_SESSION_ID_KEY.concat(token));
 		SecurityContextHolder.clearContext();
 		return R.ok();
 	}

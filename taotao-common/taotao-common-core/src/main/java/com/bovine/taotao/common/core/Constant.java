@@ -155,12 +155,12 @@ public interface Constant {
     	/**
     	 * 防重复请求KEY
     	 */
-    	String GATEWAY_DUPLICATE_STR_KEY = "TT:GATEWAY:DUPLICATE:";
+    	String GATEWAY_DUPLICATE_KEY = "TT:GATEWAY:DUPLICATE:";
     	
     	/**
     	 * 后台管理登录成功session id
     	 */
-    	String SYS_SESSION_ID_STR_KEY = "TT:SYS:SESSION:ID:";
+    	String SYS_SESSION_ID_KEY = "TT:SYS:SESSION:ID:";
 
 		/**
 		 * 后台管理双因子短信认证

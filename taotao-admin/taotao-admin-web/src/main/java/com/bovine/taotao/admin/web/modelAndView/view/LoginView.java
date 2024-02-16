@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -25,6 +24,11 @@ public class LoginView implements Serializable {
      * token
      */
     private String token;
+
+    /**
+     * 失效时间
+     */
+    private Long expire;
 
     /**
      * 双因子验证

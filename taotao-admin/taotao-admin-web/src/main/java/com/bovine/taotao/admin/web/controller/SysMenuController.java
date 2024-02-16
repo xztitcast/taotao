@@ -1,18 +1,5 @@
 package com.bovine.taotao.admin.web.controller;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.bovine.taotao.admin.web.annotation.Log;
 import com.bovine.taotao.admin.web.entity.SysMenu;
 import com.bovine.taotao.admin.web.service.SysMenuService;
@@ -20,6 +7,12 @@ import com.bovine.taotao.common.core.Constant;
 import com.bovine.taotao.common.core.R;
 import com.bovine.taotao.common.core.S;
 import com.bovine.taotao.common.core.exception.custom.SysServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 关系系统菜单控制器

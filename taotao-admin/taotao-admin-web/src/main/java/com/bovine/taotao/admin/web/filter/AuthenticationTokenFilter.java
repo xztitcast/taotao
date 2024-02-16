@@ -35,7 +35,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getRequestToken(request);
         if(StringUtils.isNotBlank(token)) {
-            String value = this.redisTemplate.opsForValue().get(Constant.RedisKey.SYS_SESSION_ID_STR_KEY + token);
+            String value = this.redisTemplate.opsForValue().get(Constant.RedisKey.SYS_SESSION_ID_KEY + token);
             LoginUserDetails loginUserDetails = JSON.parseObject(value, LoginUserDetails.class);
             if(loginUserDetails != null) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities());
