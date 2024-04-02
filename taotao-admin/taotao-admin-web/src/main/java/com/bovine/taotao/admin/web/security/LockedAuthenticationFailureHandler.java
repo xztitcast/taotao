@@ -17,6 +17,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -44,10 +45,10 @@ public class LockedAuthenticationFailureHandler implements AuthenticationFailure
         }else if(exception instanceof DisabledException) {
             message = "账号已被禁用, 请联系管理员!";
         }else {
-            String username = request.getParameter("username");
+            String username = request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
             Long increment = this.redisTemplate.opsForValue().increment(Constant.RedisKey.SYS_LOGIN_LOCKED_KEY.concat(username));
             if(increment > 5) {//锁定两个小时
-                this.sysUserService.update(new UpdateWrapper<SysUser>().set("locked", DateUtil.offsetHour(new Date(), 2)).eq("username", username));
+                this.sysUserService.update(new UpdateWrapper<SysUser>().set("locked", DateUtil.offsetHour(new Date(), 2)).eq(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username));
                 this.redisTemplate.delete(Constant.RedisKey.SYS_LOGIN_LOCKED_KEY.concat(username));
             }
         }
